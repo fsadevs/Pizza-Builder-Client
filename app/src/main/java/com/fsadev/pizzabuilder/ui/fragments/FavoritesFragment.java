@@ -56,7 +56,7 @@ public class FavoritesFragment extends Fragment {
         return root;
     }
 
-    //Recibe el precio base
+    //Recibe el precio base--
     private void getBasePrice() {
         FirebaseFirestore.getInstance().collection("Variables")
                 .document("Precios").get().addOnCompleteListener(task -> {
