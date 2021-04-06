@@ -1,0 +1,41 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.PizzaBuilder" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/naranja_base</item>
+        <item name="colorPrimaryVariant">@color/color_base2</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:colorBackground">#FFFFFF</item>
+        <item name="colorAccent">@color/naranja_base</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/color_base2</item>
+        <item name="colorSecondaryVariant">@color/naranja_base</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+        <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/open_sans</item>
+    </style>
+
+    <style name="ToolbarColoredBackArrow" parent="Theme.PizzaBuilder">
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+    <style name="TitleText" parent="Theme.PizzaBuilder">
+        <item name="fontFamily">@font/fjalla_one</item>
+    </style>
+
+    <style name="Theme.PizzaBuilder.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="DialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/naranja_base</item>
+    </style>
+
+
+    <style name="Theme.PizzaBuilder.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.PizzaBuilder.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

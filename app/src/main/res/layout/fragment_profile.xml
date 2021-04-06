@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.ProfileFragment">
+
+    <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
+        android:id="@+id/profile_progress"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:direction="clockwise"
+        app:drawDot="false"
+        app:gradientEndColor="#FFA726"
+        app:gradientType="sweep"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:progressColor="@color/naranja_base"
+       />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_Image"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_gravity="center_horizontal"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:src="@drawable/pizza_anim"
+        app:civ_border_color="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_progress"
+        app:layout_constraintEnd_toEndOf="@+id/profile_progress"
+        app:layout_constraintStart_toStartOf="@+id/profile_progress"
+        app:layout_constraintTop_toTopOf="@+id/profile_progress" />
+
+    <ImageButton
+        android:id="@+id/profile_btnChangePic"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/default_circle_button"
+        android:scaleType="center"
+        android:src="@drawable/ic_menu_camera"
+        android:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_progress"
+        app:layout_constraintEnd_toEndOf="@+id/profile_progress" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/profile_tabLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_progress"
+        app:tabMaxWidth="140dp"
+        app:tabMinWidth="140dp"
+        app:tabMode="scrollable"
+        app:tabRippleColor="@color/color_base2" />
+
+    <View
+        android:id="@+id/divider12"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_400"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_tabLayout" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/profile_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#F0F0F0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider12">
+
+    </androidx.viewpager2.widget.ViewPager2>
+
+    <TextView
+        android:id="@+id/profile_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:maxLines="2"
+        android:text="Nombre"
+        android:textColor="@color/drawer_icon"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/profile_progress"
+        app:layout_constraintTop_toTopOf="@+id/profile_progress" />
+
+    <TextView
+        android:id="@+id/profile_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:drawableStart="@drawable/ic_chip"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:text="9999 Puntos"
+        android:textColor="@color/gray_600"
+        app:layout_constraintStart_toEndOf="@+id/profile_progress"
+        app:layout_constraintTop_toBottomOf="@+id/profile_name" />
+
+    <TextView
+        android:id="@+id/profile_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:drawableStart="@drawable/ic_crown"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:text="Nivel 0"
+        android:textColor="@color/gray_600"
+        app:layout_constraintStart_toEndOf="@+id/profile_progress"
+        app:layout_constraintTop_toBottomOf="@+id/profile_points" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

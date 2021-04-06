@@ -1,0 +1,17 @@
+<vector android:height="20dp" android:viewportHeight="512"
+    android:viewportWidth="512" android:width="20dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#E8AD28" android:pathData="M352,48v320H32V224c17.7,0 32,-14.3 32,-32s-14.3,-32 -32,-32V48h224c0,13.3 10.7,24 24,24s24,-10.7 24,-24H352z"/>
+    <path android:fillColor="#F4D331" android:pathData="M505,283v208l-137.7,0c0,-11.5 -9.5,-20.8 -21.2,-20.8c-11.7,0 -21.2,9.3 -21.2,20.8L60,491l0,-41.6c23.4,0 42.4,-18.6 42.4,-41.6c0,-23 -19,-41.6 -42.4,-41.6l0,-83.2L505,283z"/>
+    <path android:fillColor="#FFB632" android:pathData="M505,283l-445,0l204.7,-69.3c7.8,15.4 26.9,21.7 42.6,14c10.8,-5.3 17.6,-16.1 17.6,-27.9c0,-2.1 -0.2,-4.2 -0.6,-6.2l43,-14.6C473.2,199.8 505,283 505,283z"/>
+    <path android:fillColor="#EA9F26" android:pathData="M409.6,418.2a31.8,31.2 0,1 0,63.6 0a31.8,31.2 0,1 0,-63.6 0z"/>
+    <path android:fillColor="#EA9F26" android:pathData="M134.1,355.8a31.8,31.2 0,1 0,63.6 0a31.8,31.2 0,1 0,-63.6 0z"/>
+    <path android:fillColor="#EA9F26" android:pathData="M120,120m-24,0a24,24 0,1 1,48 0a24,24 0,1 1,-48 0"/>
+    <path android:fillColor="#EA9F26" android:pathData="M296,176m-24,0a24,24 0,1 1,48 0a24,24 0,1 1,-48 0"/>
+    <path android:fillColor="#EA9F26" android:pathData="M218.9,428.6a21.2,20.8 0,1 0,42.4 0a21.2,20.8 0,1 0,-42.4 0z"/>
+    <path android:fillColor="#EA9F26" android:pathData="M360,336c8.8,0 16,7.2 16,16s-28.8,14.2 -40.5,14.2c-11.7,0 8.5,-5.4 8.5,-14.2S351.2,336 360,336z"/>
+    <path android:fillColor="#EA9F26" android:pathData="M184,208m-16,0a16,16 0,1 1,32 0a16,16 0,1 1,-32 0"/>
+    <path android:fillColor="#EA9F26" android:pathData="M88,320m-16,0a16,16 0,1 1,32 0a16,16 0,1 1,-32 0"/>
+    <path android:fillColor="#EA9F26" android:pathData="M388.4,241.4a10.6,10.4 0,1 0,21.2 0a10.6,10.4 0,1 0,-21.2 0z"/>
+    <path android:fillColor="#EA9F26" android:pathData="M104,232m-8,0a8,8 0,1 1,16 0a8,8 0,1 1,-16 0"/>
+    <path android:fillColor="#EA9F26" android:pathData="M240,104m-8,0a8,8 0,1 1,16 0a8,8 0,1 1,-16 0"/>
+</vector>

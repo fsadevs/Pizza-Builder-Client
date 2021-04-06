@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.fsadev.pizzabuilder.ui.fragments.HomeFragment"
+        android:label="Pizza Builder"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_cart"
+            app:destination="@id/nav_cart" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_profile"
+            app:destination="@id/nav_profile" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_history"
+            app:destination="@id/nav_favorites" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_builder"
+            app:destination="@id/nav_builder" />
+        <action
+            android:id="@+id/action_nav_home_to_storeFragment"
+            app:destination="@id/nav_store" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.fsadev.pizzabuilder.ui.fragments.ProfileFragment"
+        android:label="Mi Perfil"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_nav_profile_to_nav_store"
+            app:destination="@id/nav_store"
+            app:enterAnim="@anim/expandvertical"
+            app:exitAnim="@anim/left_out"
+            app:popEnterAnim="@anim/expandvertical"
+            app:popExitAnim="@anim/left_out"
+            app:popUpTo="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_cart"
+        android:name="com.fsadev.pizzabuilder.ui.fragments.CartFragment"
+        android:label="Mi Pedido"
+        tools:layout="@layout/fragment_cart" >
+        <action
+            android:id="@+id/action_nav_cart_to_nav_builder"
+            app:destination="@id/nav_builder"
+            app:enterAnim="@anim/left_in"
+            app:exitAnim="@anim/left_out"
+            app:popEnterAnim="@anim/right_in"
+            app:popExitAnim="@anim/right_out" />
+        <action
+            android:id="@+id/action_nav_cart_to_nav_home"
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/expandvertical"
+            app:exitAnim="@anim/left_out"
+            app:popEnterAnim="@anim/expandvertical"
+            app:popExitAnim="@anim/left_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_favorites"
+        android:name="com.fsadev.pizzabuilder.ui.fragments.FavoritesFragment"
+        android:label="Favoritos"
+        tools:layout="@layout/fragment_favorites" />
+    <action
+        android:id="@+id/action_global_nav_cart"
+        app:destination="@id/nav_cart"
+        app:enterAnim="@anim/expandvertical"
+        app:exitAnim="@anim/left_out"
+        app:popEnterAnim="@anim/expandvertical"
+        app:popExitAnim="@anim/left_out"
+        app:popUpTo="@id/nav_home" />
+    <action
+        android:id="@+id/action_global_nav_profile"
+        app:destination="@id/nav_profile"
+        app:enterAnim="@anim/expandvertical"
+        app:exitAnim="@anim/contractvertical"
+        app:popEnterAnim="@anim/expandvertical"
+        app:popExitAnim="@anim/contractvertical" />
+    <fragment
+        android:id="@+id/nav_builder"
+        android:name="com.fsadev.pizzabuilder.ui.fragments.BuilderFragment"
+        android:label="Arma tu Pizza"
+        tools:layout="@layout/fragment_builder">
+        <action
+            android:id="@+id/action_nav_builder_to_nav_cart"
+            app:destination="@id/nav_cart"
+            app:enterAnim="@anim/left_in"
+            app:exitAnim="@anim/left_out"
+            app:popEnterAnim="@anim/right_in"
+            app:popExitAnim="@anim/right_out"
+            app:popUpTo="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_community"
+        android:name="com.fsadev.pizzabuilder.ui.fragments.CommunityFragment"
+        android:label="Comunidad"
+        tools:layout="@layout/fragment_community" />
+    <fragment
+        android:id="@+id/nav_store"
+        android:name="com.fsadev.pizzabuilder.ui.fragments.StoreFragment"
+        android:label="Tienda"
+        tools:layout="@layout/fragment_store" />
+</navigation>

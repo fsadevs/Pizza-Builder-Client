@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "831212067819",
+    "project_id": "pizzabuilderapp",
+    "storage_bucket": "pizzabuilderapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831212067819:android:8dd5574ceea26c2f8117ae",
+        "android_client_info": {
+          "package_name": "com.fsadev.pizzabuilder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "831212067819-e43q4b5uo4admo6th9ke227eqb24dlvv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ1alTTaV39Ju2cggcR03UgXT7S2N3bOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "831212067819-e43q4b5uo4admo6th9ke227eqb24dlvv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
