@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fsadev.pizzabuilder.R;
 import com.fsadev.pizzabuilder.models.common.Formatear;
+import com.fsadev.pizzabuilder.models.pizza.CartAdapter;
 import com.fsadev.pizzabuilder.models.pizza.CartPizza;
 import com.fsadev.pizzabuilder.models.pizza.ListPizza;
-import com.fsadev.pizzabuilder.models.pizza.CartAdapter;
 import com.fsadev.pizzabuilder.ui.activities.CheckoutActivity;
 
 

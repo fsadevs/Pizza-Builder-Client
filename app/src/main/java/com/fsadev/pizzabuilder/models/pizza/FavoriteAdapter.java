@@ -1,7 +1,6 @@
 package com.fsadev.pizzabuilder.models.pizza;
 
 import android.content.Context;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
 
     //Interface que recibe la posicion del item
     public interface onFavoriteClickListener {
-        void onItemClick(int position);
+        void onItemClick(int position,int[]loc);
     }
 
     //Metodo publico para vincular el click
@@ -91,7 +90,9 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             if (listener!=null){
                 int position = getAdapterPosition();
                 if (position!=RecyclerView.NO_POSITION){
-                    listener.onItemClick(position);
+                    int[] loc = new int[2];
+                    view.getLocationOnScreen(loc);
+                    listener.onItemClick(position,loc );
                 }
             }
         }

@@ -11,7 +11,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.service.autofill.UserData;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;

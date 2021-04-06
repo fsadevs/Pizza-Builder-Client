@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fsadev.pizzabuilder.R;
 import com.fsadev.pizzabuilder.models.pizza.CartPizza;
 import com.fsadev.pizzabuilder.models.pizza.FavoriteAdapter;
-import com.fsadev.pizzabuilder.models.pizza.Pizza;
 import com.fsadev.pizzabuilder.models.pizza.ListPizza;
+import com.fsadev.pizzabuilder.models.pizza.Pizza;
 import com.fsadev.pizzabuilder.models.user.UserInfo;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,12 +25,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class FavoritesFragment extends Fragment {
+public class FavoritesFragment extends Fragment{
     private RecyclerView recyclerView;
     private ArrayList<Pizza> favoritesList;
     private FavoriteAdapter adapter;
     private Map<String,Double> priceList;
     private Double basePrice;
+
 
     public FavoritesFragment() {
         // Required empty public constructor
@@ -43,11 +44,15 @@ public class FavoritesFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_favorites, container, false);
         //------------------------------------------------------------------------------------------
+
+
         favoritesList = new ArrayList<>();
         adapter = new FavoriteAdapter(favoritesList);
         //recycler
         recyclerView = root.findViewById(R.id.favorites_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+        //Metodos
         Initialize();
         getIngredients();
         getBasePrice();
@@ -65,6 +70,7 @@ public class FavoritesFragment extends Fragment {
                     }
         });
     }
+
 
     //Recibe los ingredientes
     private void getIngredients() {
@@ -105,7 +111,7 @@ public class FavoritesFragment extends Fragment {
         adapter.setOnItemClick(this::addToCart);
     }
     //Añade la pizza al carrito
-    private void addToCart(int position) {
+    private void addToCart(int position,int[]loc) {
         //TODO: ARMAR LA FUNCION PARA AÑADIR AL CARRITO
         //Recibe la lista de ingredientes
         if (priceList!=null && basePrice!=null){
@@ -136,12 +142,18 @@ public class FavoritesFragment extends Fragment {
             //Arma el objeto pizza y lo añade a la lista--------------------------------------------
             ListPizza.addPizza(new CartPizza(name,sauce,cheese,toppings,price));
             Toast.makeText(getContext(), "Añadido al carrito", Toast.LENGTH_SHORT).show();
+
+            //Animacion para mostrar que se añadio el item
+
+
         }
 
 
 
-        //Animacion para mostrar que se añadio el item
+
     }
+
+
 
 
 }
