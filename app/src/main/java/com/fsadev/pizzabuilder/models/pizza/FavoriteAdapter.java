@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,20 +19,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fsadev.pizzabuilder.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> implements Filterable {
     private final ArrayList<Pizza> listFavorites;
+    private final ArrayList<Pizza> fullList;
     private FavoriteAdapter.onFavoriteClickListener listener;
     protected Context context;
 
     //Constructor
-    public FavoriteAdapter(ArrayList<Pizza> listFavorites) {
-        this.listFavorites = listFavorites;
+    public FavoriteAdapter(ArrayList<Pizza> list) {
+        fullList = list;
+        listFavorites = new ArrayList<>(fullList);
     }
 
     //Interface que recibe la posicion del item
     public interface onFavoriteClickListener {
-        void onItemClick(int position,int[]loc);
+        void onItemClick(int position);
     }
 
     //Metodo publico para vincular el click
@@ -61,11 +66,56 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         return listFavorites.size();
     }
 
-    //Clase que crea la vista
+
+    //Filtros para la busqueda----------------------------------------------------------------------
+    @Override
+    public Filter getFilter() {
+        return favoriteFilter;
+    }
+    //Filtro
+    private final Filter favoriteFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<Pizza> filteredList = new ArrayList<>();
+            //en caso de que el constrait este nulo o vacio retorna la lista entera
+            if (constraint== null || constraint.length()==0){
+                filteredList.addAll(fullList);
+            }else{
+                //convierte el constrait en una string en minusculas y sin espacios
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                //compara el string con la lista de pizzas
+                for (Pizza pizza : fullList){
+                    String name = pizza.getName().toLowerCase();
+                    //si el item coincide con la busqueda lo añade
+                    if (name.contains(filterPattern)){
+                        filteredList.add(pizza);
+                    }
+                }
+            }
+            //Crea el resultado de la busqueda con la lista filtrada
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            //limpia la lista
+            listFavorites.clear();
+            //llena la lista con los resultados
+            listFavorites.addAll((Collection<? extends Pizza>) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    //Clase que crea la vista-----------------------------------------------------------------------
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtSauce, txtCheese, txtTopping,txtName;
-        private ImageView icon;
-        private ConstraintLayout ingredientsLayout, headerLayout;
+        private final TextView txtSauce;
+        private final TextView txtCheese;
+        private final TextView txtTopping;
+        private final TextView txtName;
+        private final ImageView icon;
+        private final ConstraintLayout ingredientsLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,7 +128,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             icon = itemView.findViewById(R.id.favorite_img);
             //layouts
             ingredientsLayout = itemView.findViewById(R.id.favorite_ingredients_layout);
-            headerLayout = itemView.findViewById(R.id.favorite_headerLayout);
+            ConstraintLayout headerLayout = itemView.findViewById(R.id.favorite_headerLayout);
             headerLayout.setOnClickListener(this::onCardClick);
             //boton añadir al carrito
             itemView.findViewById(R.id.favorite_btnAddToCart).setOnClickListener(this::AddToCart);
@@ -90,9 +140,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             if (listener!=null){
                 int position = getAdapterPosition();
                 if (position!=RecyclerView.NO_POSITION){
-                    int[] loc = new int[2];
-                    view.getLocationOnScreen(loc);
-                    listener.onItemClick(position,loc );
+                    listener.onItemClick(position);
                 }
             }
         }

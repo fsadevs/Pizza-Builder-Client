@@ -4,8 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background2"
+    android:background="#FFFFFF"
     tools:context=".ui.activities.HomeActivity">
+
+    <ImageView
+        android:id="@+id/fondo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/background2" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -16,9 +23,9 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            app:theme="@style/ToolbarColoredBackArrow"
             android:layout_height="?attr/actionBarSize"
             app:popupTheme="@style/Theme.PizzaBuilder.PopupOverlay"
+            app:theme="@style/ToolbarColoredBackArrow"
             app:titleTextColor="@color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>

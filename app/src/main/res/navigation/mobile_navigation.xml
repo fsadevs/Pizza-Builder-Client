@@ -35,11 +35,10 @@
         <action
             android:id="@+id/action_nav_profile_to_nav_store"
             app:destination="@id/nav_store"
-            app:enterAnim="@anim/expandvertical"
+            app:enterAnim="@anim/left_in"
             app:exitAnim="@anim/left_out"
-            app:popEnterAnim="@anim/expandvertical"
-            app:popExitAnim="@anim/left_out"
-            app:popUpTo="@id/nav_home" />
+            app:popEnterAnim="@anim/right_in"
+            app:popExitAnim="@anim/right_out" />
     </fragment>
     <fragment
         android:id="@+id/nav_cart"
@@ -65,7 +64,15 @@
         android:id="@+id/nav_favorites"
         android:name="com.fsadev.pizzabuilder.ui.fragments.FavoritesFragment"
         android:label="Favoritos"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_nav_favorites_to_nav_cart"
+            app:destination="@id/nav_cart"
+            app:enterAnim="@anim/left_in"
+            app:exitAnim="@anim/left_out"
+            app:popEnterAnim="@anim/right_in"
+            app:popExitAnim="@anim/right_out" />
+    </fragment>
     <action
         android:id="@+id/action_global_nav_cart"
         app:destination="@id/nav_cart"
@@ -89,6 +96,14 @@
         <action
             android:id="@+id/action_nav_builder_to_nav_cart"
             app:destination="@id/nav_cart"
+            app:enterAnim="@anim/left_in"
+            app:exitAnim="@anim/left_out"
+            app:popEnterAnim="@anim/right_in"
+            app:popExitAnim="@anim/right_out"
+            app:popUpTo="@id/nav_home" />
+        <action
+            android:id="@+id/action_nav_builder_to_nav_favorites"
+            app:destination="@id/nav_favorites"
             app:enterAnim="@anim/left_in"
             app:exitAnim="@anim/left_out"
             app:popEnterAnim="@anim/right_in"

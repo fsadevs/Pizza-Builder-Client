@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -383,7 +384,7 @@ public class BuilderFragment extends Fragment {
     private void AddToFav(View view) {
         if (checkBoxFavorites.isChecked()){
             Pizza pizza = CreatePizza();
-            new DialogSavePizza(getContext(),pizza);
+            new DialogSavePizza(this,pizza);
         }
 
     }

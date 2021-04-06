@@ -10,6 +10,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.fsadev.pizzabuilder.R;
 import com.fsadev.pizzabuilder.models.pizza.Pizza;
 import com.fsadev.pizzabuilder.models.user.UserInfo;
@@ -25,10 +29,10 @@ public class DialogSavePizza {
     private final Context context;
     private final Button btnConfirm;
 
-    public DialogSavePizza(Context ctx, Pizza pizza){
+    public DialogSavePizza(Fragment fragment, Pizza pizza){
 
         mPizza = pizza;
-        context = ctx;
+        context = fragment.getContext();
         //crea el dialogo y le asigna la vista
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_save_pizza);
@@ -45,7 +49,7 @@ public class DialogSavePizza {
         addTextWatcher();
         //Boton confirmar---------------------------------------------------------------------------
         btnConfirm = dialog.findViewById(R.id.save_pizza_btnConfirm);
-        btnConfirm.setOnClickListener(v-> ConfirmPizza());
+        btnConfirm.setOnClickListener(v-> ConfirmPizza(fragment));
         //Boton cancelar----------------------------------------------------------------------------
         dialog.findViewById(R.id.save_pizza_btnCancel).setOnClickListener(v-> dialog.dismiss());
         //Muestra el dialogo
@@ -66,7 +70,7 @@ public class DialogSavePizza {
     }
 
     //Confirma la pizza
-    private void ConfirmPizza() {
+    private void ConfirmPizza(Fragment fragment) {
         String name = Objects.requireNonNull(tbxName.getText()).toString();
 
             //sube la pizza a los favoritos del usuario
@@ -76,6 +80,7 @@ public class DialogSavePizza {
                         if (task.isSuccessful()){
                             Toast.makeText(context, "Añadido a favoritos", Toast.LENGTH_SHORT).show();
                             //cierra el dialogo
+                            NavHostFragment.findNavController(fragment).navigate(R.id.action_nav_builder_to_nav_favorites);
                             dialog.dismiss();
                         }
             });

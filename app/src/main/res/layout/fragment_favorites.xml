@@ -10,18 +10,25 @@
         android:id="@+id/favorites_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <ImageView
-        android:id="@+id/imgChip"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/ic_chip"
-        tools:layout_editor_absoluteY="32dp" />
+    <SearchView
+        android:id="@+id/favorites_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:closeIcon="@drawable/ic_cross_small"
+        android:orientation="horizontal"
+        android:queryHint="Búsqueda por nombre"
+        android:searchIcon="@drawable/ic_magnifying_glass"
+        android:showDividers="none"
+        app:layout_constraintBottom_toTopOf="@+id/favorites_recyclerView"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
