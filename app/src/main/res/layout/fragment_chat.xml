@@ -7,7 +7,7 @@
     tools:context=".ui.fragments.ChatFragment">
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/chat_sendMessage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="8dp"
@@ -21,6 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -31,13 +32,14 @@
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+        app:layout_constraintEnd_toStartOf="@+id/chat_sendMessage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageButton"
+        app:layout_constraintTop_toTopOf="@+id/chat_sendMessage"
         app:strokeColor="@color/naranja_base"
         app:strokeWidth="1dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/chat_tbxMessage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -50,5 +52,18 @@
             android:textSize="16sp"
             app:boxBackgroundMode="filled" />
     </com.google.android.material.card.MaterialCardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chat_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/materialCardView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

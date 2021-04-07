@@ -54,10 +54,13 @@
             android:name=".ui.activities.HomeActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.PizzaBuilder.NoActionBar" />
+            android:windowSoftInputMode="adjustResize"
+        android:theme="@style/Theme.PizzaBuilder.NoActionBar" />
+
         <activity
             android:name=".ui.activities.LoginActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
