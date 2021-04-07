@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.fsadev.pizzabuilder.R;
 import com.fsadev.pizzabuilder.models.pizza.CartPizza;
 import com.fsadev.pizzabuilder.models.pizza.FavoriteAdapter;
@@ -19,6 +21,7 @@ import com.fsadev.pizzabuilder.models.user.UserInfo;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

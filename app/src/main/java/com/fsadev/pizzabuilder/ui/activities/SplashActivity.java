@@ -7,11 +7,13 @@ import android.os.CountDownTimer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fsadev.pizzabuilder.R;
+import com.fsadev.pizzabuilder.models.user.CurrentUser;
+import com.fsadev.pizzabuilder.models.user.UserProgress;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SplashActivity extends AppCompatActivity {
-    private static final int COUNT_DOWN_TIME =3500;
+    private static final int COUNT_DOWN_TIME =2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +31,13 @@ public class SplashActivity extends AppCompatActivity {
             public void onTick(long millisUntilFinished) { }
             @Override
             public void onFinish() {
+                //Verifica si se consiguen los datos del usuario para mandar al home
                 if (user!=null){
-                    GoToHome();
+                    new CurrentUser().addUserListener(()->{
+                        new UserProgress().addProgressListener(()->{
+                            GoToHome();
+                        });
+                    });
                 }else{
                     GoToLogin();
                 }

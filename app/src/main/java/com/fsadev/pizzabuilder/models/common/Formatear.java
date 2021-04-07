@@ -2,7 +2,6 @@ package com.fsadev.pizzabuilder.models.common;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.TimeZone;
 
 public class Formatear {
@@ -13,10 +12,11 @@ public class Formatear {
         return "$ " + formateado.replace(".",",");
     }
 
-    public static String getTime(Date date){
+    public static String getTime(Long milis){
+
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         sdf.setTimeZone(TimeZone.getDefault());
-        return sdf.format(date);
+        return sdf.format(milis);
     }
 
 }

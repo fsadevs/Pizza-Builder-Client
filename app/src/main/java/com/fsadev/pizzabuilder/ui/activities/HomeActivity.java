@@ -1,7 +1,6 @@
 package com.fsadev.pizzabuilder.ui.activities;
 
 import android.content.Intent;
-import android.inputmethodservice.InputMethodService;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +22,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.fsadev.pizzabuilder.R;
 import com.fsadev.pizzabuilder.models.user.CurrentUser;
 import com.fsadev.pizzabuilder.models.user.UserInfo;
+import com.fsadev.pizzabuilder.services.MessageService;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -71,6 +71,8 @@ public class HomeActivity extends AppCompatActivity{
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        //Inicia el servicio de mensajes
+        startService(new Intent(this, MessageService.class));
     }
 
     //Instancia el usuario y crea un objeto User
