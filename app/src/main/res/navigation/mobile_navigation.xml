@@ -120,4 +120,9 @@
         android:name="com.fsadev.pizzabuilder.ui.fragments.StoreFragment"
         android:label="Tienda"
         tools:layout="@layout/fragment_store" />
+    <fragment
+        android:id="@+id/nav_chat"
+        android:name="com.fsadev.pizzabuilder.ui.fragments.ChatFragment"
+        android:label="Chatea con nosotros"
+        tools:layout="@layout/fragment_chat" />
 </navigation>

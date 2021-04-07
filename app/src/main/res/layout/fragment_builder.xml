@@ -224,16 +224,17 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:text="@string/precio"
-            app:layout_constraintStart_toEndOf="@+id/pizzaLayout"
-            app:layout_constraintTop_toTopOf="@+id/pizzaLayout" />
+            app:layout_constraintBottom_toBottomOf="@+id/btn_addToFavorites"
+            app:layout_constraintStart_toEndOf="@+id/pizzaLayout" />
 
         <TextView
             android:id="@+id/pizza_price"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="16dp"
+            android:textAlignment="textStart"
             android:textColor="@color/teal_700"
             android:textSize="26sp"
             android:textStyle="bold"
@@ -295,7 +296,6 @@
             android:id="@+id/btn_addToFavorites"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:button="@drawable/ic_favorite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

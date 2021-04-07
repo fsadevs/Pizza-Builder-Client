@@ -62,7 +62,8 @@ public class HomeActivity extends AppCompatActivity{
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home,
                 R.id.nav_community,
-                R.id.nav_profile)
+                R.id.nav_profile,
+                R.id.nav_chat)
                 .setOpenableLayout(drawer)
                 .build();
         // Navigation controller
