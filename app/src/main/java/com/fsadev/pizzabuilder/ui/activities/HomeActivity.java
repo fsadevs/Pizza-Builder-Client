@@ -1,5 +1,6 @@
 package com.fsadev.pizzabuilder.ui.activities;
 
+import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -34,6 +35,7 @@ public class HomeActivity extends AppCompatActivity{
     private ImageView profilePic;
     private TextView headerUserName;
     private DrawerLayout drawer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,8 @@ public class HomeActivity extends AppCompatActivity{
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         //Inicia el servicio de mensajes
-        startService(new Intent(this, MessageService.class));
+
+        startService(new Intent(this,MessageService.class));
     }
 
     //Instancia el usuario y crea un objeto User
@@ -122,9 +125,17 @@ public class HomeActivity extends AppCompatActivity{
 
     //Cierra sesion y manda al login
     public void onClickLogout(MenuItem item){
+        stopService(new Intent(this,MessageService.class));
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(HomeActivity.this, LoginActivity.class));
         finish();
+    }
+
+    //Desactiva el servicio de mensajeria cuando el usuario cierra la aplicación
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(new Intent(this,MessageService.class));
     }
 
     //Actualizar nombre desde el profileFragment cuando se guardan los cambios

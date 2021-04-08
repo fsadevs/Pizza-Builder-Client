@@ -49,6 +49,7 @@
             android:gravity="center_vertical"
             android:hint="Escribí tu mensaje"
             android:inputType="textShortMessage|none"
+            android:maxLength="200"
             android:singleLine="true"
             android:textSize="16sp"
             app:boxBackgroundMode="filled" />

@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
     private void firebaseAuthWithGoogle(String idToken) {
         progressDialog = new ProgressDialog(this,R.style.DialogStyle);
         progressDialog.setIcon(R.drawable.logo_small);
-        progressDialog.setTitle("CartPizza Builder");
+        progressDialog.setTitle("Pizza Builder");
         progressDialog.setMessage("Iniciando sesión con Google. Por favor, espere...");
         progressDialog.show();
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);

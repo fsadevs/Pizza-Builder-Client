@@ -49,7 +49,7 @@ public class InfoFragment extends Fragment {
     private void UpdateInfo(View view) {
         //Progreso del guardado
         ProgressDialog progressDialog = new ProgressDialog(getContext());
-        progressDialog.setTitle("CartPizza Builder");
+        progressDialog.setTitle("Pizza Builder");
         progressDialog.setMessage("Guardando tus datos...");
         progressDialog.setIcon(R.drawable.logo_small);
         progressDialog.show();

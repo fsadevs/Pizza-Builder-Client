@@ -1,6 +1,7 @@
 package com.fsadev.pizzabuilder.ui.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.fsadev.pizzabuilder.models.order.CreateJSON;
 import com.fsadev.pizzabuilder.models.order.PBOrder;
 import com.fsadev.pizzabuilder.models.pizza.ListPizza;
 import com.fsadev.pizzabuilder.models.user.UserInfo;
+import com.google.android.material.card.MaterialCardView;
 import com.mercadopago.android.px.core.MercadoPagoCheckout;
 import com.mercadopago.android.px.internal.util.JsonUtil;
 import com.mercadopago.android.px.model.Payment;
@@ -50,6 +52,14 @@ public class CheckoutActivity extends AppCompatActivity {
         //Opciones de pago
         RadioGroup radioGroup = findViewById(R.id.checkout_RGroupOptPago);
         radioGroup.setOnCheckedChangeListener(this::setPaymentMethod);
+        //card
+        MaterialCardView card = findViewById(R.id.checkout_cardLocation);
+        card.setOnCheckedChangeListener(this::CheckCardStatus);
+
+    }
+
+    private void CheckCardStatus(MaterialCardView card, boolean b) {
+        card.setChecked(true);
     }
 
     //Cambia la variable de medio de pago

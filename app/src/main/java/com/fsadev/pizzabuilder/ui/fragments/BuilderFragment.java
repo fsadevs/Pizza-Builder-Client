@@ -194,7 +194,6 @@ public class BuilderFragment extends Fragment {
             final int i = progressBar.getProgress();
             //Si el progreso ya termino no pedirá indexará más cache
             if (i < progressBar.getMax()) {
-
                 Glide.with(this)
                         .downloadOnly() //Descarga la imágen
                         .load(listIngredients.get(i).getImgURL())

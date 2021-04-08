@@ -18,6 +18,7 @@ import androidx.core.app.NotificationManagerCompat;
 import com.fsadev.pizzabuilder.R;
 import com.fsadev.pizzabuilder.models.user.UserInfo;
 import com.fsadev.pizzabuilder.ui.activities.HomeActivity;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,10 +38,15 @@ public class MessageService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        messageRef = FirebaseDatabase.getInstance().getReference().child("Usuarios")
-                .child(UserInfo.getUserID()).child("Chat");
-        createNotificationChannel();
-        setupListener();
+        try {
+            String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            messageRef = FirebaseDatabase.getInstance().getReference().child("Usuarios")
+                    .child(user).child("Chat");
+            createNotificationChannel();
+            setupListener();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
     //AL INICIAR SERVICIO
@@ -107,7 +113,8 @@ public class MessageService extends Service {
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) { }
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
     }
 

@@ -114,7 +114,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //Sube los datos
         ProgressDialog progressDialog = new ProgressDialog(this,R.style.DialogStyle);
         progressDialog.setIcon(R.drawable.logo_small);
-        progressDialog.setTitle("CartPizza Builder");
+        progressDialog.setTitle("Pizza Builder");
         progressDialog.setMessage("Guardando ubicación actual...");
         progressDialog.show();
         FirebaseFirestore.getInstance().collection("Usuarios")

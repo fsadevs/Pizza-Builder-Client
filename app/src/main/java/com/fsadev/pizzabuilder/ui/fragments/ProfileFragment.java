@@ -178,7 +178,7 @@ public class ProfileFragment extends Fragment {
         UploadTask uploadTask = profilePicRef.putFile(resultUri);
         //Progreso
         ProgressDialog progressDialog = new ProgressDialog(getContext(),R.style.DialogStyle);
-        progressDialog.setTitle("CartPizza Builder");
+        progressDialog.setTitle("Pizza Builder");
         progressDialog.setMessage("Subiendo imagen de perfil...");
         progressDialog.setIcon(R.drawable.logo_small);
         progressDialog.show();
