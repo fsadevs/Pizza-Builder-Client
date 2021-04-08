@@ -16,7 +16,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.fsadev.pizzabuilder.R;
-import com.fsadev.pizzabuilder.models.user.UserInfo;
 import com.fsadev.pizzabuilder.ui.activities.HomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;

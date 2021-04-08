@@ -16,4 +16,9 @@
     <color name="gray_400">#FFBDBDBD</color>
     <color name="gray_600">#FF757575</color>
 
+
+    <color name="colorPrimaryLight">#FFA000</color>
+    <color name="colorAccent">#FFEE58</color>
+    <color name="cloud">#07225E</color>
+
 </resources>

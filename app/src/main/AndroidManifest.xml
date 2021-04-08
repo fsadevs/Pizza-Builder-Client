@@ -51,10 +51,6 @@
             android:name=".ui.activities.CheckoutActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activities.GameActivity"
-            android:hardwareAccelerated="true"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".ui.activities.HomeActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
@@ -77,6 +73,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".game.asteroid.activities.GameActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="preloaded_fonts"

@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.fsadev.pizzabuilder.R;
-import com.fsadev.pizzabuilder.ui.activities.CheckoutActivity;
+import com.fsadev.pizzabuilder.game.asteroid.activities.GameActivity;
 
 
 public class CommunityFragment extends Fragment {
@@ -25,7 +25,7 @@ public class CommunityFragment extends Fragment {
 
 
 
-        root.findViewById(R.id.btn_Play).setOnClickListener(v -> startActivity(new Intent(getActivity(), CheckoutActivity.class)));
+        root.findViewById(R.id.btn_Play).setOnClickListener(v -> startActivity(new Intent(getActivity(), GameActivity.class)));
 
         //------------------------------------------------------------------------------------------
         return root;
