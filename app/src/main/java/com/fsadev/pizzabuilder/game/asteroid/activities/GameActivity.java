@@ -8,30 +8,24 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
@@ -47,15 +41,15 @@ import com.fsadev.pizzabuilder.game.asteroid.views.GameView;
 public class GameActivity extends AppCompatActivity
         implements GameView.GameListener, View.OnClickListener {
 
-    private TextView titleView,highScoreView,hintView,weaponName;
-    private ImageView musicView,weaponView,soundView,aboutView;
+    private TextView scoreView,highScoreView,hintView,weaponName;
+    private ImageView musicView,weaponView,soundView,aboutView,gameTitle;
     private LinearLayout buttonLayout;
     private ImageView pauseView;
     private ImageView stopView;
     private GameView gameView;
 
     private ValueAnimator animator;
-    private String appName, hintStart;
+    private String hintStart;
 
     private SoundPool soundPool;
     private int explosionId;
@@ -118,6 +112,7 @@ public class GameActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Pone la actividad en pantalla completa
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -128,9 +123,9 @@ public class GameActivity extends AppCompatActivity
         //Vistas
         weaponView = findViewById(R.id.game_weaponView);
         weaponName = findViewById(R.id.game_weaponName);
-
+        gameTitle = findViewById(R.id.game_title);
         controlsLayout = findViewById(R.id.game_controlsLayout);
-        titleView = findViewById(R.id.title);
+        scoreView = findViewById(R.id.title);
         highScoreView = findViewById(R.id.highScore);
         hintView = findViewById(R.id.hint);
         buttonLayout = findViewById(R.id.buttonLayout);
@@ -169,11 +164,10 @@ public class GameActivity extends AppCompatActivity
         int colorPrimary = ContextCompat.getColor(this, R.color.naranja_base);
         int colorAccent = ContextCompat.getColor(this, R.color.colorAccent);
 
-        titleView.setTypeface(typeface);
-        titleView.setPaintFlags(titleView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        titleView.getPaint().setShader(new LinearGradient(
+        scoreView.setTypeface(typeface);
+        scoreView.getPaint().setShader(new LinearGradient(
                 0, 0, 0,
-                titleView.getLineHeight(),
+                scoreView.getLineHeight(),
                 colorAccent,
                 colorPrimary,
                 Shader.TileMode.REPEAT
@@ -198,8 +192,6 @@ public class GameActivity extends AppCompatActivity
                 Shader.TileMode.REPEAT
         ));
 
-        //Titulo del juego
-        appName = "PIZZA WARS";
         //Ayuda
         hintStart = getString(R.string.hint_start);
         //Musica
@@ -309,13 +301,18 @@ public class GameActivity extends AppCompatActivity
     //Maneja el parpardeo del titulo
     private void animateTitle(final boolean isVisible) {
         highScoreView.setVisibility(View.GONE);
-
+        //Oculta o muestra el titulo del juego
+        if (isVisible){
+            gameTitle.setVisibility(View.VISIBLE);
+        }else{
+            gameTitle.setVisibility(View.GONE);
+        }
         animator = ValueAnimator.ofFloat(isVisible ? 0 : 1, isVisible ? 1 : 0);
         animator.setDuration(750);
         animator.setStartDelay(500);
         animator.setInterpolator(new AccelerateInterpolator());
         animator.addUpdateListener(valueAnimator -> {
-            titleView.setText(appName.substring(0, (int) ((float) valueAnimator.getAnimatedValue() * appName.length())));
+            scoreView.setText("");
             hintView.setText(hintStart.substring(0, (int) ((float) valueAnimator.getAnimatedValue() * hintStart.length())));
         });
         animator.start();
@@ -473,7 +470,7 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void onAsteroidHit(int score) {
-        titleView.setText(String.valueOf(score));
+        scoreView.setText(String.valueOf(score));
         if (isSound)
             soundPool.play(explosionId, 1, 1, 0, 0, 1);
         if (achievementUtils != null)
@@ -495,6 +492,7 @@ public class GameActivity extends AppCompatActivity
             if (controlsLayout.getVisibility() == View.GONE){
                 controlsLayout.setVisibility(View.VISIBLE);
             }
+
 
         }
     }
