@@ -80,7 +80,6 @@ public class GameActivity extends AppCompatActivity
     private boolean isPaused;
     private Bitmap play;
     private Bitmap pause;
-    private Button btnFire;
     private AchievementUtils achievementUtils;
     private final Handler handler = new Handler();
     private final Runnable hintRunnable = new Runnable() {
@@ -143,7 +142,7 @@ public class GameActivity extends AppCompatActivity
         stopView = findViewById(R.id.stop);
         gameView = findViewById(R.id.game);
         //botones
-        btnFire = findViewById(R.id.game_btnShot);
+        Button btnFire = findViewById(R.id.game_btnShot);
         btnFire.setOnClickListener(this::Fire);
 
 
@@ -241,6 +240,9 @@ public class GameActivity extends AppCompatActivity
                 animateTitle(false);
                 if (isSound)
                     soundPool.play(hissId, 1, 1, 0, 0, 1);
+                if (controlsLayout.getVisibility()==View.GONE){
+                    controlsLayout.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -288,13 +290,15 @@ public class GameActivity extends AppCompatActivity
             player.start();
 
         handler.postDelayed(hintRunnable, 1000);
-
+        //Setea la vista del juego
         gameView.setListener(this);
         gameView.setOnClickListener(this);
+        achievementUtils = new AchievementUtils(this);
         animateTitle(true);
 
 
     }
+    //----------------------------------------------------------------------------------------------
 
     //Disparos
     private void Fire(View view) {

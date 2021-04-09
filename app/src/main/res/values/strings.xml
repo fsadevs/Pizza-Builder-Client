@@ -61,26 +61,22 @@
     <string name="msg_out_of_ammo">Sin munición</string>
     <string name="msg_weapon_equipped">Arma Equipada: %s</string>
     <string name="msg_too_many_projectiles">Si disparas mucho te vas a quedar sin munición.</string>
-    <string name="msg_free_refill">Normalmente solo recargarías cuando destruyas 4 asteroides, pero por esta vez, tomá uno gratis.</string>
+    <string name="msg_free_refill">Normalmente solo aparece una recarga cuando destruís 10 ingredientes, pero por esta vez, tomá uno gratis.</string>
     <string name="msg_hold_distance">Mantené precionado para moverte una distancia más larga.</string>
-    <string name="msg_dont_get_hit">Que no te peguen los asteroides!</string>
-    <string name="msg_press_to_move">Presioná en cualquier parte del lado izquierdo o derecho para mover tu nave.</string>
+    <string name="msg_dont_get_hit">Que no te peguen los ingredientes!</string>
+    <string name="msg_press_to_move">Presioná en cualquier parte del lado IZQUIERDO o DERECHO para mover tu nave.</string>
     <string name="msg_come_back_anytime">Eso es todo por ahora. Podés volver a ver el tutorial en cualquier momento usado el icono de información.</string>
-    <string name="msg_get_refill">Normalmente los conseguís destruyendo 5 asteroides.</string>
+    <string name="msg_get_refill">Normalmente los conseguís destruyendo 10 ingredientes.</string>
     <string name="msg_used_ammo">Parece que te quedaste sin munición. Tomá una recarga.</string>
-    <string name="msg_double_tap_fire">Doble toque para disparar. Destruí los asteroides para ganar puntos.</string>
+    <string name="msg_double_tap_fire">Presioná el botón DISPARO. Destruí los ingredientes para ganar puntos.</string>
     <string name="msg_weapon_upgrades_total">Hay 12 mejoras de armas en total.</string>
-    <string name="msg_get_weapon">Obtenés una nueva arma después de destruir 20 asteroides.</string>
+    <string name="msg_get_weapon">Obtenés una nueva arma después de destruir 20 ingredientes.</string>
     <string name="msg_this_is_weapon">Esto es un arma. Mové la nave cerca para recogerlo.</string>
-    <string name="msg_destroy_asteroid">Destruí el asteroide para ganar un punto.</string>
-    <string name="msg_move_near_ammunition">Move la nave cerca de la caja de munición para recogerla.</string>
+    <string name="msg_destroy_asteroid">Destruí el ingrediente para ganar un punto.</string>
+    <string name="msg_move_near_ammunition">Move la nave cerca de la RECARGA para recogerla.</string>
     <string name="msg_move_near_weapon">Move la nave cerca de la caja del arma para recogerla.</string>
-    <string name="msg_sign_in_error">An error occurred while trying to sign in… :P</string>
-    <string name="title_sign_out">Sign out?</string>
-    <string name="msg_sign_out">Are you sure you want to sign out of Google Play Games?</string>
-    <string name="title_animation_speed">Animation Speed</string>
-    <string name="desc_animation_speed">It appears that your phone\'s animator duration has been modified in developer settings.
-        It is highly recommended that you revert this setting to its original value in order for the game to run properly.</string>
+    <string name="title_animation_speed">Velocidad de animación</string>
+    <string name="desc_animation_speed">Parece que modificaste la duración de las animaciones de tu smartphone. Esto puede hacer que el juego no corra bien, te recomendamos volver a los valores por defecto.</string>
 
 
 

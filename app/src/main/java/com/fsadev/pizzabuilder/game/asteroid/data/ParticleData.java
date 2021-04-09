@@ -16,14 +16,15 @@ public class ParticleData extends DrawerData {
         yDiff = (float) (Math.random() * 3) + 1;
     }
 
+    //Particulas de explosion
     public ParticleData(Paint paint, float x, float y) {
         super(paint);
         this.x = x;
         this.y = y;
         xDiff = ((float) (Math.random() + 0.2) - 0.5f) * 0.016f;
         yDiff = ((float) (Math.random() + 0.2) - 0.5f) * 16;
-        size = 1f;
-        sizeDiff = 4f;
+        size = 1f; //default 1
+        sizeDiff = 2f; //default 4
         sizeDiffDiff = -0.2f;
         rotate = (float) Math.random() * 360;
         rotateDiff = (float) Math.random() * 10;
@@ -57,7 +58,8 @@ public class ParticleData extends DrawerData {
         rotate += rotateDiff;
 
         float left = x * width;
-        return new Rect((int) left - (int) (size / 2), (int) y - (int) (size / 2), (int) left + (int) (size / 2), (int) y + (int) (size / 2));
+        return new Rect((int) left - (int) (size / 2), (int) y - (int) (size / 2),
+                (int) left + (int) (size / 2), (int) y + (int) (size / 2));
     }
 
     /**

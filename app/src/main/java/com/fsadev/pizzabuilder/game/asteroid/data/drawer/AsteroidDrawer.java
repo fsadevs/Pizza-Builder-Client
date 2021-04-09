@@ -116,7 +116,7 @@ public class AsteroidDrawer extends DrawerData {
      */
     public void destroy(AsteroidData asteroid) {
         asteroids.remove(asteroid);
-
+        //Genera las particulas i=cantidad de particulas
         for (int i = 0; i < 30; i++) {
             particles.add(new ParticleData(paint(1), asteroid.x, asteroid.y));
         }

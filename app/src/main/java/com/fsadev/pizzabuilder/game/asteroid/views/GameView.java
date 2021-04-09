@@ -91,21 +91,25 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
     public GameView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         surfaceHolder = getHolder();
+
         //Colores
         int colorPrimaryLight = ContextCompat.getColor(getContext(), R.color.colorPrimaryLight);
         int colorPrimary = ContextCompat.getColor(getContext(), R.color.naranja_base);
         int colorAccent = ContextCompat.getColor(getContext(), R.color.colorAccent);
         int cloudColor = ContextCompat.getColor(getContext(), R.color.cloud);
-        //--
+
+        //Paint del proyectil
         paint = new Paint();
         paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);
 
+        //Paint de las particulas de explosion
         accentPaint = new Paint();
-        accentPaint.setColor(colorPrimaryLight);
+        accentPaint.setColor(colorAccent);
         accentPaint.setStyle(Paint.Style.FILL);
         accentPaint.setAntiAlias(true);
+
         //Nubes
         Paint cloudPaint = new Paint();
         cloudPaint.setColor(cloudColor);
@@ -228,7 +232,8 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                 );
                 //Bucle que dibuja los proyectiles--------------------------------------------------
                 for (ProjectileData projectile : new ArrayList<>(projectiles)) {
-                    Rect rect = projectile.next(speed*3, canvas.getWidth(), canvas.getHeight());
+                    //Atributos del proyectil default = (speed*3)
+                    Rect rect = projectile.next(5, canvas.getWidth(), canvas.getHeight());
                     if (rect != null) {
                         //Comprueba la colision
                         AsteroidData asteroid = asteroids.asteroidAt(rect);
@@ -339,7 +344,7 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                 messages.drawMessage(getContext(), R.string.msg_press_to_move);
             }
         } else tutorial = TUTORIAL_NONE;
-
+        //-------------------------------------------------
         isPlaying = true;
         score = 0;
         speed = 1;
@@ -351,21 +356,25 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
         projectiles.clear();
         boxes.clear();
 
-        if (animator != null && animator.isStarted())
+        if (animator != null && animator.isStarted()) {
             animator.cancel();
-
+        }
+        //Animacion de aparecer la nave
         ValueAnimator animator = ValueAnimator.ofFloat(shipPositionY, 1);
         animator.setDuration(150);
         animator.setInterpolator(new DecelerateInterpolator());
         animator.addUpdateListener(valueAnimator -> shipPositionY = (float) valueAnimator.getAnimatedValue());
         animator.start();
-
-        if (!isTutorial) // TUTORIAL NONSENSE!!!!!
+        //Si no es el tutorial te entrega un arma
+        if (!isTutorial) {
             weapon = WeaponData.WEAPONS[0];
+        }
+        //Setea el listener para el movimiento
         setOnTouchListener(this);
 
-        if (listener != null)
+        if (listener != null) {
             listener.onStart(isTutorial);
+        }
     }
 
     // Game Over - resea ---------------------------------------------------------------------------
@@ -403,11 +412,7 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
         animator1.start();
     }
 
-    /**
-     * Determine if a game is being played.
-     *
-     * @return Whether a game is being played.
-     */
+    //Determina si el juego esta en marcha
     public boolean isPlaying() {
         return isPlaying;
     }
