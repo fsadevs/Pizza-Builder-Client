@@ -8,6 +8,8 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -16,16 +18,21 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import com.fsadev.pizzabuilder.R;
@@ -45,9 +52,6 @@ public class GameActivity extends AppCompatActivity
     private TextView hintView;
     private ImageView musicView;
     private ImageView soundView;
-    private ImageView achievementsView;
-    private ImageView rankView;
-    private ImageView gamesView;
     private ImageView aboutView;
     private LinearLayout buttonLayout;
     private ImageView pauseView;
@@ -76,13 +80,12 @@ public class GameActivity extends AppCompatActivity
     private boolean isMusic;
     private Bitmap musicEnabled;
     private Bitmap musicDisabled;
-
+    private ConstraintLayout controlsLayout;
     private boolean isPaused;
     private Bitmap play;
     private Bitmap pause;
-
+    private Button btnFire;
     private AchievementUtils achievementUtils;
-
     private final Handler handler = new Handler();
     private final Runnable hintRunnable = new Runnable() {
 
@@ -98,9 +101,13 @@ public class GameActivity extends AppCompatActivity
                 else if (hintView.getText().toString().contains("."))
                     hintView.setText(String.format("..%s..", hintStart));
 
-                if (highScoreView.getVisibility() == View.VISIBLE)
-                    highScoreView.setVisibility(View.GONE);
-                else highScoreView.setVisibility(View.VISIBLE);
+                if (highScoreView.getVisibility() == View.VISIBLE){
+                    highScoreView.setVisibility(View.GONE);}
+                else {
+                    highScoreView.setVisibility(View.VISIBLE);
+                }
+
+
             }
 
             if (isPaused) {
@@ -124,6 +131,7 @@ public class GameActivity extends AppCompatActivity
         //preferencias
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //Vistas
+        controlsLayout = findViewById(R.id.game_controlsLayout);
         titleView = findViewById(R.id.title);
         highScoreView = findViewById(R.id.highScore);
         hintView = findViewById(R.id.hint);
@@ -135,6 +143,12 @@ public class GameActivity extends AppCompatActivity
         pauseView = findViewById(R.id.pause);
         stopView = findViewById(R.id.stop);
         gameView = findViewById(R.id.game);
+        //botones
+        findViewById(R.id.game_btnLeft).setOnTouchListener(this::LeftTouch);
+        findViewById(R.id.game_btnRight).setOnTouchListener(this::RightTouch);
+        btnFire = findViewById(R.id.game_btnShot);
+        btnFire.setOnClickListener(this::Fire);
+
 
         //Sonidos
         soundPool = new SoundPool.Builder()
@@ -192,7 +206,7 @@ public class GameActivity extends AppCompatActivity
         appName = "PIZZA WARS";
         //Ayuda
         hintStart = getString(R.string.hint_start);
-
+        //Musica
         isMusic = prefs.getBoolean(PreferenceUtils.PREF_MUSIC, true);
         musicEnabled = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_music_enabled), colorAccent, colorPrimary);
         musicDisabled = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_music_disabled), colorAccent, colorPrimary);
@@ -233,6 +247,7 @@ public class GameActivity extends AppCompatActivity
             }
         });
 
+        //Botones de estado
         play = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_play), colorAccent, colorPrimary);
         pause = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_pause), colorAccent, colorPrimary);
         Bitmap stop = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_stop), colorAccent, colorPrimary);
@@ -284,6 +299,25 @@ public class GameActivity extends AppCompatActivity
 
     }
 
+    //Disparos
+    private void Fire(View view) {
+        gameView.FireProyectils();
+    }
+
+    //Boton right
+    private boolean RightTouch(View view, MotionEvent motionEvent) {
+        int side = 1;
+        gameView.ControlShip(motionEvent,side);
+        return true;
+    }
+
+    //Boton left
+    private boolean LeftTouch(View view, MotionEvent motionEvent) {
+        int side = 0;
+        gameView.ControlShip(motionEvent,side);
+        return true;
+    }
+
     //Maneja el parpardeo del titulo
     private void animateTitle(final boolean isVisible) {
         highScoreView.setVisibility(View.GONE);
@@ -331,26 +365,24 @@ public class GameActivity extends AppCompatActivity
         if (gameView != null && !isPaused)
             gameView.onResume();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            if (Settings.Global.getFloat(getContentResolver(), Settings.Global.ANIMATOR_DURATION_SCALE, 1) != 1) {
-                try {
-                    ValueAnimator.class.getMethod("setDurationScale", float.class).invoke(null, 1f);
-                } catch (Throwable t) {
-                    new AlertDialog.Builder(this)
-                            .setTitle(R.string.title_animation_speed)
-                            .setMessage(R.string.desc_animation_speed)
-                            .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                                try {
-                                    startActivity(new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS));
-                                } catch (Exception ignored) {
-                                }
-                                dialogInterface.dismiss();
-                            })
-                            .setNegativeButton(android.R.string.cancel, (dialogInterface, i) ->
-                                    dialogInterface.dismiss())
-                            .create()
-                            .show();
-                }
+        if (Settings.Global.getFloat(getContentResolver(), Settings.Global.ANIMATOR_DURATION_SCALE, 1) != 1) {
+            try {
+                ValueAnimator.class.getMethod("setDurationScale", float.class).invoke(null, 1f);
+            } catch (Throwable t) {
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.title_animation_speed)
+                        .setMessage(R.string.desc_animation_speed)
+                        .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                            try {
+                                startActivity(new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS));
+                            } catch (Exception ignored) {
+                            }
+                            dialogInterface.dismiss();
+                        })
+                        .setNegativeButton(android.R.string.cancel, (dialogInterface, i) ->
+                                dialogInterface.dismiss())
+                        .create()
+                        .show();
             }
         }
     }
@@ -380,7 +412,7 @@ public class GameActivity extends AppCompatActivity
     public void onStop(int score) {
         animateTitle(true);
         gameView.setOnClickListener(this);
-
+        //Guarda el puntaje maximo
         int highScore = prefs.getInt(PreferenceUtils.PREF_HIGH_SCORE, 0);
         if (score > highScore) {
             //TODO: awesome high score animation or something
@@ -388,11 +420,15 @@ public class GameActivity extends AppCompatActivity
             prefs.edit().putInt(PreferenceUtils.PREF_HIGH_SCORE, score).apply();
 
         }
-
+        //Muestra el puntaje maximo
         highScoreView.setText(String.format(getString(R.string.score_high), highScore));
-
-        if (achievementUtils != null)
+        //Detiene el listener
+        if (achievementUtils != null) {
             achievementUtils.onStop(score);
+        }
+        //Oculta los controles
+        controlsLayout.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -415,6 +451,8 @@ public class GameActivity extends AppCompatActivity
             soundPool.play(upgradeId, 1, 1, 0, 0, 1);
         if (achievementUtils != null)
             achievementUtils.onWeaponUpgraded(weapon);
+        //Cambia el icono del arma
+        btnFire.setForeground(AppCompatResources.getDrawable(this,weapon.getDrawableRes()));
     }
 
     @Override
@@ -458,8 +496,14 @@ public class GameActivity extends AppCompatActivity
             gameView.play(prefs.getBoolean(PreferenceUtils.PREF_TUTORIAL, true));
 
             animateTitle(false);
-            if (isSound)
+            if (isSound) {
                 soundPool.play(hissId, 1, 1, 0, 0, 1);
+            }
+            //Muestra los controles
+            if (controlsLayout.getVisibility() == View.GONE){
+                controlsLayout.setVisibility(View.VISIBLE);
+            }
+
         }
     }
 

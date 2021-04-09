@@ -75,7 +75,8 @@
         </activity>
 
         <activity android:name=".game.asteroid.activities.GameActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PizzaBuilderBridge"/>
 
         <meta-data
             android:name="preloaded_fonts"

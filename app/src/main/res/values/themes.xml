@@ -34,6 +34,7 @@
         <item name="colorAccent">@color/naranja_base</item>
     </style>
 
+    <style name="Theme.PizzaBuilderBridge" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge"/>
 
     <style name="Theme.PizzaBuilder.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

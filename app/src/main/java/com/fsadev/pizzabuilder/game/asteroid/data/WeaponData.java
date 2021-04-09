@@ -74,6 +74,10 @@ public class WeaponData {
         return bitmap;
     }
 
+    public int getDrawableRes(){
+        return drawableRes;
+    }
+
     /**
      * Fire the weapon; generate an amount of ProjectileDatas at the given
      * x/y coordinates and add them to the passed List instance.

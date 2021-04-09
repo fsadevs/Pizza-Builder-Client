@@ -209,7 +209,7 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                 float top = canvas.getHeight() - (shipBitmap.getHeight() * shipPositionY);
 
                 Matrix matrix = new Matrix();
-                matrix.postTranslate(-shipBitmap.getWidth() / 2, -shipBitmap.getHeight() / 2);
+                matrix.postTranslate(-shipBitmap.getWidth() / 2f, -shipBitmap.getHeight() / 2f);
                 matrix.postRotate(shipRotation);
                 matrix.postTranslate(left, top);
                 canvas.drawBitmap(shipBitmap, matrix, paint);
@@ -257,12 +257,12 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                                 //Caja de municion
                                 if (score % 10 == 0) {
                                     boxes.add(new BoxData(boxBitmap, box -> new Handler(Looper.getMainLooper()).post(() -> {
-                                        ammoAnimator = ValueAnimator.ofFloat(ammo, Math.min(ammo + 10, weapon.capacity));
+                                        ammoAnimator = ValueAnimator.ofFloat(ammo, Math.min(ammo + 20, weapon.capacity));
                                         ammoAnimator.setDuration(250);
                                         ammoAnimator.setInterpolator(new DecelerateInterpolator());
                                         ammoAnimator.addUpdateListener(valueAnimator -> ammo = (float) valueAnimator.getAnimatedValue());
                                         ammoAnimator.start();
-
+                                        //callback para eventos al conseguir municion
                                         if (listener != null)
                                             listener.onAmmoReplenished();
                                     })));
@@ -436,6 +436,9 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+            {
+                //Disparo del proyectil
+                /*
                 if (System.currentTimeMillis() - projectileTime < 350 && (tutorial == TUTORIAL_NONE || tutorial > TUTORIAL_UPGRADE)) {
                     if (ammoAnimator != null && ammoAnimator.isStarted())
                         ammoAnimator.end();
@@ -473,15 +476,22 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                     return false;
                 } else projectileTime = System.currentTimeMillis();
 
+                 */
+                //Movimiento de la nave
                 if (animator != null && animator.isStarted())
                     animator.cancel();
+                //Detecta el lado del touch o si el boton fue precionado
+               if (event.getX() > getWidth() / 2f ) {
 
-                if (event.getX() > getWidth() / 2) {
-                    if (shipPositionX < 1)
+                    if (shipPositionX < 1) {
                         animator = ValueAnimator.ofFloat(shipPositionX, shipPositionX + 1);
-                    else return false;
-                } else if (shipPositionX > 0)
+                    }
+                    else{
+                        return false;
+                    }
+                } else if (shipPositionX > 0) {
                     animator = ValueAnimator.ofFloat(shipPositionX, shipPositionX - 1);
+                }
 
                 animator.setDuration((long) (1000 / speed));
                 animator.setStartDelay(50);
@@ -498,7 +508,8 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                 animator.start();
                 shipPositionStartX = shipPositionX;
                 break;
-            case MotionEvent.ACTION_UP:
+        }
+            case MotionEvent.ACTION_UP: {
                 if (animator != null && animator.isStarted())
                     animator.cancel();
 
@@ -531,10 +542,12 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
 
                 animator.start();
                 break;
+            }
         }
         return true;
     }
 
+    //Interface
     public interface GameListener {
         void onStart(boolean isTutorial);
 
@@ -555,5 +568,121 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
         void onOutOfAmmo();
 
         void onAsteroidHit(int score);
+
     }
+
+    //Dispara proyectiles
+    public void FireProyectils(){
+        //Disparo del proyectil
+        if ((tutorial == TUTORIAL_NONE || tutorial > TUTORIAL_UPGRADE)) {
+            if (ammoAnimator != null && ammoAnimator.isStarted())
+                ammoAnimator.end();
+            if (ammo > 0) {
+                weapon.fire(projectiles, shipPositionX, shipBitmap.getHeight() * shipPositionY * 1.5f);
+                if (listener != null)
+                    listener.onProjectileFired(weapon);
+
+                ammoAnimator = ValueAnimator.ofFloat(ammo, ammo - 1);
+                ammoAnimator.setDuration(250);
+                ammoAnimator.setInterpolator(new DecelerateInterpolator());
+                ammoAnimator.addUpdateListener(valueAnimator -> ammo = (float) valueAnimator.getAnimatedValue());
+                ammoAnimator.start();
+            } else if (tutorial > TUTORIAL_NONE && boxes.size() == 0) { // definitely tutorial nonsense
+                messages.clear();
+                messages.drawMessage(getContext(), R.string.msg_too_many_projectiles);
+                messages.drawMessage(getContext(), R.string.msg_free_refill);
+                boxes.add(new BoxData(boxBitmap, box -> {
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        ammoAnimator = ValueAnimator.ofFloat(ammo, weapon.capacity);
+                        ammoAnimator.setDuration(250);
+                        ammoAnimator.setInterpolator(new DecelerateInterpolator());
+                        ammoAnimator.addUpdateListener(valueAnimator ->
+                                ammo = (float) valueAnimator.getAnimatedValue());
+                        ammoAnimator.start();
+
+                        if (listener != null)
+                            listener.onAmmoReplenished();
+                    });
+                }));
+            } else if (listener != null) {
+                messages.drawMessage(getContext(), R.string.msg_out_of_ammo);
+                listener.onOutOfAmmo();
+            }
+
+        } else projectileTime = System.currentTimeMillis();
+    }
+
+
+    //Controla la nave
+    public void ControlShip(MotionEvent event, int side){
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+            {
+                //Movimiento de la nave
+                if (animator != null && animator.isStarted())
+                    animator.cancel();
+                //Detecta el lado del touch o si el boton fue precionado
+                if (side==1) {
+                    if (shipPositionX < 1) {
+                        animator = ValueAnimator.ofFloat(shipPositionX, shipPositionX + 1);
+                    }
+
+                } else if (shipPositionX > 0) {
+                    animator = ValueAnimator.ofFloat(shipPositionX, shipPositionX - 1);
+                }
+
+                animator.setDuration((long) (1000 / speed));
+                animator.setStartDelay(50);
+                animator.setInterpolator(new AccelerateInterpolator());
+                animator.addUpdateListener(valueAnimator -> {
+                    float newX = (float) valueAnimator.getAnimatedValue();
+                    if (newX <= 0)
+                        shipPositionX = 0;
+                    else if (newX >= 1)
+                        shipPositionX = 1;
+                    else shipPositionX = newX;
+                });
+
+                animator.start();
+                shipPositionStartX = shipPositionX;
+                break;
+            }
+            case MotionEvent.ACTION_UP: {
+                if (animator != null && animator.isStarted())
+                    animator.cancel();
+
+                if (tutorial == TUTORIAL_MOVE) { // tutorial nonsense! yay!
+                    if (System.currentTimeMillis() - projectileTime > 500)
+                        tutorial++;
+                    else {
+                        messages.clear();
+                        messages.drawMessage(getContext(), R.string.msg_hold_distance);
+                    }
+                }
+
+                float newX = shipPositionX + ((shipPositionX - shipPositionStartX) / 1.5f);
+                if (newX <= 0)
+                    newX = 0;
+                else if (newX >= 1)
+                    newX = 1;
+
+                animator = ValueAnimator.ofFloat(shipPositionX, newX);
+                animator.setInterpolator(new DecelerateInterpolator());
+                animator.setDuration((long) (500 / speed));
+                animator.addUpdateListener(valueAnimator -> {
+                    float newX1 = (float) valueAnimator.getAnimatedValue();
+                    if (newX1 <= 0)
+                        shipPositionX = 0;
+                    else if (newX1 >= 1)
+                        shipPositionX = 1;
+                    else shipPositionX = newX1;
+                });
+
+                animator.start();
+                break;
+            }
+        }
+    }
+
+
 }
