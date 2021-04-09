@@ -46,28 +46,28 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
     private final SurfaceHolder surfaceHolder;
     private boolean isRunning;
     private Thread thread;
-
+    //Nave
     private final Bitmap shipBitmap;
     private float shipPositionX = 0.5f;
     private float shipPositionY = -1f;
     private float shipPositionStartX;
     private float shipRotation;
-
+    //Caja de municion
     private final Bitmap boxBitmap;
     private final List<BoxData> boxes;
-
+    //Arma
     private WeaponData weapon;
     private final List<ProjectileData> projectiles;
     private long projectileTime;
-
+    //Drawers
     private final BackgroundDrawer background;
     private final AsteroidDrawer asteroids;
     private final MessageDrawer messages;
-
+    //Valores del juego
     private ValueAnimator animator;
     private GameListener listener;
     private boolean isPlaying;
-    public int score;
+    public int score, asteroidPassedCount;
     private float speed = 1;
     private float ammo;
     private ValueAnimator ammoAnimator;
@@ -189,13 +189,19 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                     messages.drawMessage(getContext(), R.string.msg_move_near_ammunition);
                 }
 
-                // ----- end tutorial nonsense --------
+                //FIN DEL TUTORIAL------------------------------------------------------------------
 
                 //Dibuja el fondo
                 background.draw(canvas, speed);
-
+                //Evento: paso un asteroide
                 if (asteroids.draw(canvas, speed)) {
                     new Handler(Looper.getMainLooper()).post(() -> listener.onAsteroidPassed());
+                    //Aumenta el contador
+                    asteroidPassedCount++;
+                    //Si el listener esta activo y pasaron 20 asteroides crea una caja de municion
+                    if (listener != null && asteroidPassedCount % 20 == 0) {
+                        CreateAmmoBox();
+                    }
                 }
                 //Maneja las cajas
                 for (BoxData box : new ArrayList<>(boxes)) {
@@ -213,27 +219,28 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                 matrix.postRotate(shipRotation);
                 matrix.postTranslate(left, top);
                 canvas.drawBitmap(shipBitmap, matrix, paint);
-
+                //Dibuja la nave en la nueva posicion
                 Rect position = new Rect(
                         (int) left - (shipBitmap.getWidth() / 2),
                         (int) top - (shipBitmap.getWidth() / 2),
                         (int) left + (shipBitmap.getWidth() / 2),
                         (int) top + (shipBitmap.getWidth() / 2)
                 );
-                //Crea los proyectiles
+                //Bucle que dibuja los proyectiles--------------------------------------------------
                 for (ProjectileData projectile : new ArrayList<>(projectiles)) {
                     Rect rect = projectile.next(speed*3, canvas.getWidth(), canvas.getHeight());
                     if (rect != null) {
-                        AsteroidData asteroid = asteroids.asteroidAt(rect);
                         //Comprueba la colision
+                        AsteroidData asteroid = asteroids.asteroidAt(rect);
                         if (isPlaying && asteroid != null) {
-                            //Destruye el proyectil y el asteroide
+                            //Destruye el proyectil y el enemigo
                             projectiles.remove(projectile);
                             asteroids.destroy(asteroid);
 
-                            if (tutorial == TUTORIAL_ASTEROID) // more tutorial nonsense
+                            if (tutorial == TUTORIAL_ASTEROID) {// more tutorial nonsense
                                 tutorial++;
-                            //Aumenta la velocidad
+                            }
+                            //Aumenta la velocidad del juego
                             speed += 0.02;
                             new Handler(Looper.getMainLooper()).post(() -> {
                                 if (listener != null)
@@ -254,26 +261,20 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                                         });
                                     }));
                                 }
-                                //Caja de municion
+                                //Crea una caja de municion si se destruyeron 10 enemigos
                                 if (score % 10 == 0) {
-                                    boxes.add(new BoxData(boxBitmap, box -> new Handler(Looper.getMainLooper()).post(() -> {
-                                        ammoAnimator = ValueAnimator.ofFloat(ammo, Math.min(ammo + 20, weapon.capacity));
-                                        ammoAnimator.setDuration(250);
-                                        ammoAnimator.setInterpolator(new DecelerateInterpolator());
-                                        ammoAnimator.addUpdateListener(valueAnimator -> ammo = (float) valueAnimator.getAnimatedValue());
-                                        ammoAnimator.start();
-                                        //callback para eventos al conseguir municion
-                                        if (listener != null)
-                                            listener.onAmmoReplenished();
-                                    })));
+                                    CreateAmmoBox();
                                 }
                             });
                         }
-
+                        //Dibuja el proyectil
                         canvas.drawRect(rect, paint);
-                    } else projectiles.remove(projectile);
+                    } else {
+                        //Destruye el proyectil
+                        projectiles.remove(projectile);
+                    }
                 }
-
+                //Tutorial-------------------------------------------------------------------------
                 if (isPlaying) {
                     if (tutorial == TUTORIAL_NONE || tutorial > TUTORIAL_UPGRADE) { // kinda tutorial nonsense but don't worry about it
                         accentPaint.setAlpha(100);
@@ -284,6 +285,7 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
 
                     AsteroidData asteroid = asteroids.asteroidAt(position);
                     if (asteroid != null) {
+                        //Tutorial
                         if (tutorial > TUTORIAL_NONE) {
                             messages.clear();
                             messages.drawMessage(getContext(), R.string.msg_dont_get_hit);
@@ -307,18 +309,28 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                         }
                     }
                 }
-
+                //Dibuja en el canvas
                 messages.draw(canvas, speed);
                 surfaceHolder.unlockCanvasAndPost(canvas);
             }
         }
     }
+    //Crea una caja de municion---------------------------------------------------------------------
+    private void CreateAmmoBox() {
+        boxes.add(new BoxData(boxBitmap, box -> new Handler(Looper.getMainLooper()).post(() -> {
+            ammoAnimator = ValueAnimator.ofFloat(ammo, Math.min(ammo + 20, weapon.capacity));
+            ammoAnimator.setDuration(250);
+            ammoAnimator.setInterpolator(new DecelerateInterpolator());
+            ammoAnimator.addUpdateListener(valueAnimator -> ammo = (float) valueAnimator.getAnimatedValue());
+            ammoAnimator.start();
+            //callback para eventos al conseguir municion
+            if (listener != null) {
+                listener.onAmmoReplenished();
+            }
+        })));
+    }
 
-    /**
-     * Start a new game! Wheeeeeeeeee!
-     *
-     * @param isTutorial        Should this game start with a tutorial?
-     */
+    //Comienza el juego ----------------------------------------------------------------------------
     public void play(boolean isTutorial) {
         if (isTutorial) { // tutorial. nonsense.
             if (tutorial == TUTORIAL_NONE) {
@@ -332,6 +344,7 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
         score = 0;
         speed = 1;
         ammo = 15;
+        asteroidPassedCount= 0;
         shipPositionX = 0.5f;
         shipRotation = 0;
         asteroids.setMakeAsteroids(!isTutorial);
@@ -355,9 +368,7 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
             listener.onStart(isTutorial);
     }
 
-    /**
-     * Stop the game, reset everything.
-     */
+    // Game Over - resea ---------------------------------------------------------------------------
     public void stop() {
         isPlaying = false;
         setOnTouchListener(null);
@@ -453,7 +464,7 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                 } else if (shipPositionX > 0) {
                     animator = ValueAnimator.ofFloat(shipPositionX, shipPositionX - 1);
                 }
-
+                //Anima el movimiento lateral de la nave
                 animator.setDuration((long) (1000 / speed));
                 animator.setStartDelay(50);
                 animator.setInterpolator(new AccelerateInterpolator());
@@ -488,7 +499,7 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                     newX = 0;
                 else if (newX >= 1)
                     newX = 1;
-
+                //Anima la desaceleracion de la nave
                 animator = ValueAnimator.ofFloat(shipPositionX, newX);
                 animator.setInterpolator(new DecelerateInterpolator());
                 animator.setDuration((long) (500 / speed));
@@ -542,107 +553,25 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                 weapon.fire(projectiles, shipPositionX, shipBitmap.getHeight() * shipPositionY * 1.5f);
                 if (listener != null)
                     listener.onProjectileFired(weapon);
-
+                //Actualiza la municion
                 ammoAnimator = ValueAnimator.ofFloat(ammo, ammo - 1);
                 ammoAnimator.setDuration(250);
                 ammoAnimator.setInterpolator(new DecelerateInterpolator());
                 ammoAnimator.addUpdateListener(valueAnimator -> ammo = (float) valueAnimator.getAnimatedValue());
                 ammoAnimator.start();
-            } else if (tutorial > TUTORIAL_NONE && boxes.size() == 0) { // definitely tutorial nonsense
+                //Tutorial
+            } else if (tutorial > TUTORIAL_NONE && boxes.size() == 0) {
                 messages.clear();
                 messages.drawMessage(getContext(), R.string.msg_too_many_projectiles);
                 messages.drawMessage(getContext(), R.string.msg_free_refill);
-                boxes.add(new BoxData(boxBitmap, box -> {
-                    new Handler(Looper.getMainLooper()).post(() -> {
-                        ammoAnimator = ValueAnimator.ofFloat(ammo, weapon.capacity);
-                        ammoAnimator.setDuration(250);
-                        ammoAnimator.setInterpolator(new DecelerateInterpolator());
-                        ammoAnimator.addUpdateListener(valueAnimator ->
-                                ammo = (float) valueAnimator.getAnimatedValue());
-                        ammoAnimator.start();
-
-                        if (listener != null)
-                            listener.onAmmoReplenished();
-                    });
-                }));
+                //Crea una caja de municion
+                CreateAmmoBox();
             } else if (listener != null) {
                 messages.drawMessage(getContext(), R.string.msg_out_of_ammo);
                 listener.onOutOfAmmo();
             }
 
         } else projectileTime = System.currentTimeMillis();
-    }
-
-
-    //Controla la nave
-    public void ControlShip(MotionEvent event, int side){
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-            {
-                //Movimiento de la nave
-                if (animator != null && animator.isStarted())
-                    animator.cancel();
-                //Detecta el lado del touch o si el boton fue precionado
-                if (side==1) {
-                    if (shipPositionX < 1) {
-                        animator = ValueAnimator.ofFloat(shipPositionX, shipPositionX + 1);
-                    }
-
-                } else if (shipPositionX > 0) {
-                    animator = ValueAnimator.ofFloat(shipPositionX, shipPositionX - 1);
-                }
-
-                animator.setDuration((long) (1000 / speed));
-                animator.setStartDelay(50);
-                animator.setInterpolator(new AccelerateInterpolator());
-                animator.addUpdateListener(valueAnimator -> {
-                    float newX = (float) valueAnimator.getAnimatedValue();
-                    if (newX <= 0)
-                        shipPositionX = 0;
-                    else if (newX >= 1)
-                        shipPositionX = 1;
-                    else shipPositionX = newX;
-                });
-
-                animator.start();
-                shipPositionStartX = shipPositionX;
-                break;
-            }
-            case MotionEvent.ACTION_UP: {
-                if (animator != null && animator.isStarted())
-                    animator.cancel();
-
-                if (tutorial == TUTORIAL_MOVE) { // tutorial nonsense! yay!
-                    if (System.currentTimeMillis() - projectileTime > 500)
-                        tutorial++;
-                    else {
-                        messages.clear();
-                        messages.drawMessage(getContext(), R.string.msg_hold_distance);
-                    }
-                }
-
-                float newX = shipPositionX + ((shipPositionX - shipPositionStartX) / 1.5f);
-                if (newX <= 0)
-                    newX = 0;
-                else if (newX >= 1)
-                    newX = 1;
-
-                animator = ValueAnimator.ofFloat(shipPositionX, newX);
-                animator.setInterpolator(new DecelerateInterpolator());
-                animator.setDuration((long) (500 / speed));
-                animator.addUpdateListener(valueAnimator -> {
-                    float newX1 = (float) valueAnimator.getAnimatedValue();
-                    if (newX1 <= 0)
-                        shipPositionX = 0;
-                    else if (newX1 >= 1)
-                        shipPositionX = 1;
-                    else shipPositionX = newX1;
-                });
-
-                animator.start();
-                break;
-            }
-        }
     }
 
 
