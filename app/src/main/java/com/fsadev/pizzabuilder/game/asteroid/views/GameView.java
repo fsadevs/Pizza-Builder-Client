@@ -437,46 +437,7 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
             {
-                //Disparo del proyectil
-                /*
-                if (System.currentTimeMillis() - projectileTime < 350 && (tutorial == TUTORIAL_NONE || tutorial > TUTORIAL_UPGRADE)) {
-                    if (ammoAnimator != null && ammoAnimator.isStarted())
-                        ammoAnimator.end();
-                    if (ammo > 0) {
-                        weapon.fire(projectiles, shipPositionX, shipBitmap.getHeight() * shipPositionY * 1.5f);
-                        if (listener != null)
-                            listener.onProjectileFired(weapon);
 
-                        ammoAnimator = ValueAnimator.ofFloat(ammo, ammo - 1);
-                        ammoAnimator.setDuration(250);
-                        ammoAnimator.setInterpolator(new DecelerateInterpolator());
-                        ammoAnimator.addUpdateListener(valueAnimator -> ammo = (float) valueAnimator.getAnimatedValue());
-                        ammoAnimator.start();
-                    } else if (tutorial > TUTORIAL_NONE && boxes.size() == 0) { // definitely tutorial nonsense
-                        messages.clear();
-                        messages.drawMessage(getContext(), R.string.msg_too_many_projectiles);
-                        messages.drawMessage(getContext(), R.string.msg_free_refill);
-                        boxes.add(new BoxData(boxBitmap, box -> {
-                            new Handler(Looper.getMainLooper()).post(() -> {
-                                ammoAnimator = ValueAnimator.ofFloat(ammo, weapon.capacity);
-                                ammoAnimator.setDuration(250);
-                                ammoAnimator.setInterpolator(new DecelerateInterpolator());
-                                ammoAnimator.addUpdateListener(valueAnimator ->
-                                        ammo = (float) valueAnimator.getAnimatedValue());
-                                ammoAnimator.start();
-
-                                if (listener != null)
-                                    listener.onAmmoReplenished();
-                            });
-                        }));
-                    } else if (listener != null) {
-                        messages.drawMessage(getContext(), R.string.msg_out_of_ammo);
-                        listener.onOutOfAmmo();
-                    }
-                    return false;
-                } else projectileTime = System.currentTimeMillis();
-
-                 */
                 //Movimiento de la nave
                 if (animator != null && animator.isStarted())
                     animator.cancel();

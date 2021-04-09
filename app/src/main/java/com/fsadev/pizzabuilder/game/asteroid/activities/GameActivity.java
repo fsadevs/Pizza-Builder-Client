@@ -47,12 +47,8 @@ import com.fsadev.pizzabuilder.game.asteroid.views.GameView;
 public class GameActivity extends AppCompatActivity
         implements GameView.GameListener, View.OnClickListener {
 
-    private TextView titleView;
-    private TextView highScoreView;
-    private TextView hintView;
-    private ImageView musicView;
-    private ImageView soundView;
-    private ImageView aboutView;
+    private TextView titleView,highScoreView,hintView,weaponName;
+    private ImageView musicView,weaponView,soundView,aboutView;
     private LinearLayout buttonLayout;
     private ImageView pauseView;
     private ImageView stopView;
@@ -131,6 +127,9 @@ public class GameActivity extends AppCompatActivity
         //preferencias
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //Vistas
+        weaponView = findViewById(R.id.game_weaponView);
+        weaponName = findViewById(R.id.game_weaponName);
+
         controlsLayout = findViewById(R.id.game_controlsLayout);
         titleView = findViewById(R.id.title);
         highScoreView = findViewById(R.id.highScore);
@@ -144,8 +143,6 @@ public class GameActivity extends AppCompatActivity
         stopView = findViewById(R.id.stop);
         gameView = findViewById(R.id.game);
         //botones
-        findViewById(R.id.game_btnLeft).setOnTouchListener(this::LeftTouch);
-        findViewById(R.id.game_btnRight).setOnTouchListener(this::RightTouch);
         btnFire = findViewById(R.id.game_btnShot);
         btnFire.setOnClickListener(this::Fire);
 
@@ -304,19 +301,6 @@ public class GameActivity extends AppCompatActivity
         gameView.FireProyectils();
     }
 
-    //Boton right
-    private boolean RightTouch(View view, MotionEvent motionEvent) {
-        int side = 1;
-        gameView.ControlShip(motionEvent,side);
-        return true;
-    }
-
-    //Boton left
-    private boolean LeftTouch(View view, MotionEvent motionEvent) {
-        int side = 0;
-        gameView.ControlShip(motionEvent,side);
-        return true;
-    }
 
     //Maneja el parpardeo del titulo
     private void animateTitle(final boolean isVisible) {
@@ -428,6 +412,9 @@ public class GameActivity extends AppCompatActivity
         }
         //Oculta los controles
         controlsLayout.setVisibility(View.GONE);
+        //Reseatea el panel del arma
+        weaponName.setText(getString(R.string.weapon_pellet));
+        weaponView.setImageResource(R.drawable.ic_weapon_pellet);
 
     }
 
@@ -452,7 +439,8 @@ public class GameActivity extends AppCompatActivity
         if (achievementUtils != null)
             achievementUtils.onWeaponUpgraded(weapon);
         //Cambia el icono del arma
-        btnFire.setForeground(AppCompatResources.getDrawable(this,weapon.getDrawableRes()));
+        weaponName.setText(weapon.getName(this));
+        weaponView.setImageResource(weapon.getDrawableRes());
     }
 
     @Override
