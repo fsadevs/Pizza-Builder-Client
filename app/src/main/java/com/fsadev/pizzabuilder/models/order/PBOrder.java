@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class PBOrder {
     private orderListener mListener;
-
+    //Objeto que controla las ordenes
 
     public PBOrder(ArrayList<CartPizza> orderList){
         CurrentUser user = new CurrentUser();
@@ -44,6 +44,9 @@ public class PBOrder {
             });
         }).start();
 
+    }
+    public interface orderListener {
+        void onSuccess();
     }
     //Inicializa el listener
     public void onSuccessUpload(orderListener listener){

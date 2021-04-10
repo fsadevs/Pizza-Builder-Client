@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#000000">
 
-    <com.fsadev.pizzabuilder.game.asteroid.views.GameView
+    <com.fsadev.pizzabuilder.game.pizzawars.views.GameView
         android:id="@+id/game"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

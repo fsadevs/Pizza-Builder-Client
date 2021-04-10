@@ -1,4 +1,4 @@
-package com.fsadev.pizzabuilder.game.asteroid.utils;
+package com.fsadev.pizzabuilder.game.pizzawars.utils;
 
 import android.app.Notification;
 import android.content.Context;
@@ -9,10 +9,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.fsadev.pizzabuilder.R;
-import com.fsadev.pizzabuilder.game.asteroid.activities.GameActivity;
-import com.fsadev.pizzabuilder.game.asteroid.data.WeaponData;
-import com.fsadev.pizzabuilder.game.asteroid.views.GameView;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.fsadev.pizzabuilder.game.pizzawars.data.WeaponData;
+import com.fsadev.pizzabuilder.game.pizzawars.views.GameView;
 
 public class AchievementUtils implements GameView.GameListener {
 
@@ -20,8 +18,8 @@ public class AchievementUtils implements GameView.GameListener {
 
     private boolean isTutorial;
     private boolean isOutOfAmmo;
-    private int asteroidsHit;
-    private int asteroidsPassed;
+    private int ingredientsHitted;
+    private int ingredientsPassed;
     private long outOfAmmoTime;
 
     public AchievementUtils(Context context) {
@@ -32,8 +30,8 @@ public class AchievementUtils implements GameView.GameListener {
     public void onStart(boolean isTutorial) {
         this.isTutorial = isTutorial;
         isOutOfAmmo = false;
-        asteroidsHit = 0;
-        asteroidsPassed = 0;
+        ingredientsHitted = 0;
+        ingredientsPassed = 0;
     }
 
     @Override
@@ -50,13 +48,13 @@ public class AchievementUtils implements GameView.GameListener {
     }
 
     @Override
-    public void onAsteroidPassed() {
+    public void onIngredientPassed() {
         if (!isTutorial) {
-            if (asteroidsHit == 0 && asteroidsPassed == 0){
+            if (ingredientsHitted == 0 && ingredientsPassed == 0){
 //                unlock(R.string.achievement_coward);
             }
-            asteroidsPassed++;
-            if (asteroidsPassed==100){
+            ingredientsPassed++;
+            if (ingredientsPassed ==100){
                 //Logro: Cinturas
                 CreateNotification("Cinturas");
             }
@@ -64,7 +62,7 @@ public class AchievementUtils implements GameView.GameListener {
     }
 
     @Override
-    public void onAsteroidCrashed() {
+    public void onIngredientCrashed() {
         if (!isTutorial && isOutOfAmmo && System.currentTimeMillis() - outOfAmmoTime < 3000){
             //Logro: "Esto no es Space Invaders!"
             CreateNotification("Esto no es Space Invaders");
@@ -117,12 +115,12 @@ public class AchievementUtils implements GameView.GameListener {
     }
 
     @Override
-    public void onAsteroidHit(int score) {
-        if (!isTutorial && asteroidsHit == 0 && asteroidsPassed == 0){
+    public void onIngredientHit(int score) {
+        if (!isTutorial && ingredientsHitted == 0 && ingredientsPassed == 0){
 
         }
-        asteroidsHit++;
-        if (asteroidsHit==1000){
+        ingredientsHitted++;
+        if (ingredientsHitted ==1000){
             //Logro: Asesino de ingredientes
         }
     }

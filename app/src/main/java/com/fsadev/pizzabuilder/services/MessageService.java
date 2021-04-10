@@ -24,6 +24,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class MessageService extends Service {
     DatabaseReference messageRef;
     //REQUIRED EMPTY METHOD
@@ -38,7 +40,7 @@ public class MessageService extends Service {
     public void onCreate() {
         super.onCreate();
         try {
-            String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            String user = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
             messageRef = FirebaseDatabase.getInstance().getReference().child("Usuarios")
                     .child(user).child("Chat");
             createNotificationChannel();
@@ -97,11 +99,11 @@ public class MessageService extends Service {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 //Verifica que sea un mensaje nuevo y del servidor
-                boolean isReaded = (boolean) snapshot.child("readed").getValue();
-                boolean isMe = (boolean) snapshot.child("me").getValue();
+                boolean isReaded = (boolean) Objects.requireNonNull(snapshot.child("readed").getValue());
+                boolean isMe = (boolean) Objects.requireNonNull(snapshot.child("me").getValue());
                 //Crea la notificacion
                 if (!isReaded && !isMe) {
-                    String content = snapshot.child("content").getValue().toString();
+                    String content = Objects.requireNonNull(snapshot.child("content").getValue()).toString();
                     createNotification(content);
                 }
             }

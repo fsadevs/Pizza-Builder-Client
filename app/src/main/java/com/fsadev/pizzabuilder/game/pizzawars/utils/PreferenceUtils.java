@@ -1,4 +1,4 @@
-package com.fsadev.pizzabuilder.game.asteroid.utils;
+package com.fsadev.pizzabuilder.game.pizzawars.utils;
 
 public class PreferenceUtils {
 

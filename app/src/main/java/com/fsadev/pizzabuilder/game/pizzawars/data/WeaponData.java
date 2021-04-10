@@ -1,4 +1,4 @@
-package com.fsadev.pizzabuilder.game.asteroid.data;
+package com.fsadev.pizzabuilder.game.pizzawars.data;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,13 +10,14 @@ import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
 
 import com.fsadev.pizzabuilder.R;
-import com.fsadev.pizzabuilder.game.asteroid.utils.ImageUtils;
+import com.fsadev.pizzabuilder.game.pizzawars.utils.ImageUtils;
 
 import java.util.List;
 
 
 public class WeaponData {
 
+    // Atributos de las armas
     public static final WeaponData[] WEAPONS = new WeaponData[]{
             new WeaponData(R.string.weapon_pellet,
                     R.drawable.ic_weapon_pellet,
@@ -101,6 +102,7 @@ public class WeaponData {
     public int soundId;
     private Bitmap bitmap;
 
+    // Constructor
     public WeaponData(@StringRes int nameRes, @DrawableRes int drawableRes, @RawRes int soundRes, int strength, int spray, int capacity) {
         this.nameRes = nameRes;
         this.drawableRes = drawableRes;
@@ -110,22 +112,12 @@ public class WeaponData {
         this.capacity = capacity;
     }
 
-    /**
-     * Gets the user-facing name of the weapon.
-     *
-     * @param context       An active context instance.
-     * @return              The name of the weapon; a String.
-     */
+    // Retorna el nombre del arma
     public String getName(Context context) {
         return context.getString(nameRes);
     }
 
-    /**
-     * Get the Bitmap image of the weapon.
-     *
-     * @param context       An active context instance.
-     * @return              The Bitmap image of the weapon.
-     */
+    // Retorna el bitmap del arma
     public Bitmap getBitmap(Context context) {
         if (bitmap == null)
             bitmap = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(context, drawableRes),
@@ -134,37 +126,28 @@ public class WeaponData {
         return bitmap;
     }
 
+    // Retorna el id del recurso drawable del arma
     public int getDrawableRes(){
         return drawableRes;
     }
 
-    /**
-     * Fire the weapon; generate an amount of ProjectileDatas at the given
-     * x/y coordinates and add them to the passed List instance.
-     *
-     * @param projectiles       The current list of projectiles being drawn.
-     * @param x                 The current x coordinate of the player.
-     * @param y                 The current y coordinate of the player.
-     */
+    // Dispara el arma equipada
     public void fire(List<ProjectileData> projectiles, float x, float y) {
+        // Bucle para el spray
         for (int i = 0; i < spray; i++) {
             float xDiff = (((float) (i + 1) / (spray + 1)) - 0.5f) / 2;
+            // Bucle para la penetracion
             for (int i2 = 0; i2 < strength; i2++) {
                 projectiles.add(new ProjectileData(x, y + (3 * i2), xDiff * 0.008f, 4));
             }
         }
     }
 
+    // Carga los sonidos del arma
     private void loadSoundRes(Context context, SoundPool soundPool) {
         soundId = soundPool.load(context, soundRes, 1);
     }
 
-    /**
-     * Load the weapon sounds to be played when they are fired.
-     *
-     * @param context           An active context instance.
-     * @param soundPool         The SoundPool to load the sounds into.
-     */
     public static void loadSounds(Context context, SoundPool soundPool) {
         for (WeaponData weapon : WEAPONS) {
             weapon.loadSoundRes(context, soundPool);

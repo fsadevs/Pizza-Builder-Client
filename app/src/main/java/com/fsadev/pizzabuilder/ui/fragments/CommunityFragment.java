@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.fsadev.pizzabuilder.R;
-import com.fsadev.pizzabuilder.game.asteroid.activities.GameActivity;
+import com.fsadev.pizzabuilder.game.pizzawars.activities.GameActivity;
 
 
 public class CommunityFragment extends Fragment {

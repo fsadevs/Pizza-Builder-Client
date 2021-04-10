@@ -74,7 +74,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".game.asteroid.activities.GameActivity"
+        <activity android:name=".game.pizzawars.activities.GameActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.PizzaBuilderBridge"/>
 

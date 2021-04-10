@@ -1,4 +1,4 @@
-package com.fsadev.pizzabuilder.game.asteroid.utils;
+package com.fsadev.pizzabuilder.game.pizzawars.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,12 +13,14 @@ import android.graphics.drawable.Drawable;
 import androidx.annotation.DrawableRes;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
+import java.util.Objects;
+
 public class ImageUtils {
 
     public static Bitmap getVectorBitmap(Context context, @DrawableRes int id) {
         Drawable drawable = VectorDrawableCompat.create(context.getResources(), id, context.getTheme());
 
-        Bitmap result = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap result = Bitmap.createBitmap(Objects.requireNonNull(drawable).getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);

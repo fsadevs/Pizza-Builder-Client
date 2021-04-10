@@ -1,4 +1,4 @@
-package com.fsadev.pizzabuilder.game.asteroid.data;
+package com.fsadev.pizzabuilder.game.pizzawars.data;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -11,6 +11,7 @@ public class BoxData {
     public Rect position;
     public BoxOpenedListener listener;
 
+    // Constructor
     public BoxData(Bitmap boxBitmap, BoxOpenedListener listener) {
         this.boxBitmap = boxBitmap;
         this.listener = listener;
@@ -20,9 +21,7 @@ public class BoxData {
         yDiff = (float) (Math.random() * 3) + 1;
     }
 
-    /**
-     * Opens the box; gives the player whatever is inside it.
-     */
+    // Abre la caja y da al juegador el contenido
     public void open() {
         listener.onBoxOpened(this);
     }
@@ -38,6 +37,7 @@ public class BoxData {
      *                      null if the box can no longer be drawn
      *                      within the given width/height.
      */
+    // Calcula la posicion de la caja en el proximo frame
     public Matrix next(float speed, int width, int height) {
         if ((y - boxBitmap.getHeight()) < height) {
             y += yDiff * speed;
@@ -45,21 +45,22 @@ public class BoxData {
         } else return null;
 
         float left = x * width, top = y;
+        // Dibuja la caja
         position = new Rect(
                 (int) left - (boxBitmap.getWidth() / 2),
                 (int) top - (boxBitmap.getHeight() / 2),
                 (int) left + (boxBitmap.getWidth() / 2),
                 (int) top + (boxBitmap.getHeight() / 2)
         );
-
+        // Posicion de la caja
         Matrix matrix = new Matrix();
-        matrix.postTranslate(-boxBitmap.getWidth() / 2, -boxBitmap.getHeight() / 2);
+        matrix.postTranslate(-boxBitmap.getWidth() / 2f, -boxBitmap.getHeight() / 2f);
         matrix.postRotate(rotation);
         matrix.postTranslate(left, top);
-
+        // Retorna el valor
         return matrix;
     }
-
+    // Listener para la clase
     public interface BoxOpenedListener {
         void onBoxOpened(BoxData box);
     }
