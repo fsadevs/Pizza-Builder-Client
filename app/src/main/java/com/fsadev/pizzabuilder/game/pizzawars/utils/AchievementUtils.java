@@ -137,7 +137,7 @@ public class AchievementUtils implements GameView.GameListener {
                 .setColor(Color.WHITE)
                 .setContentTitle("Logro desbloqueado")
                 .setContentText(content)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setAutoCancel(true);
 

@@ -24,12 +24,12 @@ import android.view.animation.DecelerateInterpolator;
 import androidx.core.content.ContextCompat;
 
 import com.fsadev.pizzabuilder.R;
-import com.fsadev.pizzabuilder.game.pizzawars.data.IngredientData;
 import com.fsadev.pizzabuilder.game.pizzawars.data.BoxData;
+import com.fsadev.pizzabuilder.game.pizzawars.data.IngredientData;
 import com.fsadev.pizzabuilder.game.pizzawars.data.ProjectileData;
 import com.fsadev.pizzabuilder.game.pizzawars.data.WeaponData;
-import com.fsadev.pizzabuilder.game.pizzawars.data.drawer.IngredientDrawer;
 import com.fsadev.pizzabuilder.game.pizzawars.data.drawer.BackgroundDrawer;
+import com.fsadev.pizzabuilder.game.pizzawars.data.drawer.IngredientDrawer;
 import com.fsadev.pizzabuilder.game.pizzawars.data.drawer.MessageDrawer;
 import com.fsadev.pizzabuilder.game.pizzawars.utils.FontUtils;
 import com.fsadev.pizzabuilder.game.pizzawars.utils.ImageUtils;
@@ -137,7 +137,7 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
         shipBitmap = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.logo_small);
         //Caja de municiones
-        boxBitmap = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(getContext(), R.drawable.ic_box), colorAccent, colorPrimary);
+        boxBitmap = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(getContext(), R.drawable.ic_game_ammo_box), colorAccent, colorPrimary);
         boxes = new ArrayList<>();
     }
 

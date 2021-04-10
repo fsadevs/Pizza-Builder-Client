@@ -22,7 +22,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_corner" />
+        app:srcCompat="@drawable/ic_message_corner" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/message_self_card"

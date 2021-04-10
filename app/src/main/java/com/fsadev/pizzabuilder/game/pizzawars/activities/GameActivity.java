@@ -171,9 +171,9 @@ public class GameActivity extends AppCompatActivity
         // Boton de silenciar la musica
         isMusic = prefs.getBoolean(PreferenceUtils.PREF_MUSIC, true);
         // Musica activada
-        musicEnabled = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_music_enabled), colorAccent, colorPrimary);
+        musicEnabled = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_music_enabled), colorAccent, colorPrimary);
         // Musica desactivada
-        musicDisabled = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_music_disabled), colorAccent, colorPrimary);
+        musicDisabled = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_music_disabled), colorAccent, colorPrimary);
         musicView.setImageBitmap(isMusic ? musicEnabled : musicDisabled);
         // clickListener
         musicView.setOnClickListener(view -> {
@@ -193,9 +193,9 @@ public class GameActivity extends AppCompatActivity
         // Boton de sonidos
         isSound = prefs.getBoolean(PreferenceUtils.PREF_SOUND, true);
         // Sonido activado
-        soundEnabled = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_sound_enabled), colorAccent, colorPrimary);
+        soundEnabled = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_sound_enabled), colorAccent, colorPrimary);
         // Sonido desactivado
-        soundDisabled = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_sound_disabled), colorAccent, colorPrimary);
+        soundDisabled = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_sound_disabled), colorAccent, colorPrimary);
         soundView.setImageBitmap(isSound ? soundEnabled : soundDisabled);
         // Click listener
         soundView.setOnClickListener(view -> {
@@ -207,7 +207,7 @@ public class GameActivity extends AppCompatActivity
         });
 
         // Boton de tutorial
-        aboutView.setImageBitmap(ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_info), colorAccent, colorPrimary));
+        aboutView.setImageBitmap(ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_tutorial), colorAccent, colorPrimary));
         aboutView.setOnClickListener(view -> {
             // Inicia el tutorial
             if (!gameView.isPlaying() && (animator == null || !animator.isStarted())) {
@@ -222,9 +222,9 @@ public class GameActivity extends AppCompatActivity
         });
 
         //Botones de estado
-        play = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_play), colorAccent, colorPrimary);
-        pause = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_pause), colorAccent, colorPrimary);
-        Bitmap stop = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_stop), colorAccent, colorPrimary);
+        play = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_play), colorAccent, colorPrimary);
+        pause = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_pause), colorAccent, colorPrimary);
+        Bitmap stop = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_stop), colorAccent, colorPrimary);
         // Inicia con el boton como pausa
         pauseView.setImageBitmap(pause);
         // clickListener del boton

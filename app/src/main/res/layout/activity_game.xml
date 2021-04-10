@@ -178,7 +178,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="1dp"
             android:background="@drawable/game_fire_btn"
-            android:drawableStart="@drawable/ic_shot"
+            android:drawableStart="@drawable/ic_game_fire"
             android:foregroundGravity="fill_horizontal|left|center_vertical"
             android:foregroundTint="#FFFFFF"
             android:foregroundTintMode="src_in"

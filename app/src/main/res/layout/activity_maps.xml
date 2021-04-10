@@ -210,7 +210,7 @@
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:paddingStart="8dp"
-        app:icon="@drawable/ic_precision"
+        app:icon="@drawable/ic_current_location"
         app:iconGravity="start"
         app:iconPadding="0dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@drawable/ic_corner"
+        android:background="@drawable/ic_message_corner"
         android:backgroundTint="#FFF59D"
         android:rotation="90"
         app:layout_constraintStart_toStartOf="parent"
