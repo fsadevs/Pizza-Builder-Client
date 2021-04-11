@@ -40,7 +40,7 @@ public class IngredientDrawer extends DrawerData {
         particles = new ArrayList<>();
         //Crea los bitmap de cada ingrediente
         ingredientBitmap = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(context, R.drawable.ic_game_cheese), colorAccent, colorPrimary);
-        ingredientBitmap2 = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(context, R.drawable.ic_tomato), Color.RED, colorPrimary);
+        ingredientBitmap2 = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(context, R.drawable.ic_game_tomato), Color.RED, colorPrimary);
         ingredientBitmap3 = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(context, R.drawable.ic_game_mushroom), Color.YELLOW, Color.WHITE);
         ingredientBitmap4 = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(context, R.drawable.ic_game_bell_pepper), Color.GREEN, Color.YELLOW);
         ingredientBitmap5 = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(context, R.drawable.ic_game_egg), colorAccent, colorPrimary);

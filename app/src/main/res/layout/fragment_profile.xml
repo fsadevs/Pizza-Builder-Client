@@ -31,7 +31,7 @@
         android:layout_gravity="center_horizontal"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:src="@drawable/pizza_anim"
+        android:src="@drawable/splash_anim"
         app:civ_border_color="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/profile_progress"
         app:layout_constraintEnd_toEndOf="@+id/profile_progress"
