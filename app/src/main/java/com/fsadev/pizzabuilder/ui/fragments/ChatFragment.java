@@ -46,7 +46,11 @@ public class ChatFragment extends Fragment {
         //vistas
         listMessages = new ArrayList<>();
         recyclerView = root.findViewById(R.id.chat_recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        // Seteo del layout manager con "setStackFromEnd" para que se cargue desde abajo
+        // Es decir, el ultimo mensaje es el visible
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        layoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(layoutManager);
         adapter = new MessageAdapter(listMessages);
         tbxMessage = root.findViewById(R.id.chat_tbxMessage);
         //Boton enviar msj
