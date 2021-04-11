@@ -3,6 +3,7 @@ package com.fsadev.pizzabuilder.game.pizzawars.utils;
 import android.app.Notification;
 import android.content.Context;
 import android.graphics.Color;
+import android.widget.Toast;
 
 import androidx.annotation.StringRes;
 import androidx.core.app.NotificationCompat;
@@ -54,6 +55,7 @@ public class AchievementUtils implements GameView.GameListener {
 //                unlock(R.string.achievement_coward);
             }
             ingredientsPassed++;
+            Toast.makeText(context, "P: " + ingredientsPassed, Toast.LENGTH_SHORT).show();
             if (ingredientsPassed ==100){
                 //Logro: Cinturas
                 CreateNotification("Cinturas");

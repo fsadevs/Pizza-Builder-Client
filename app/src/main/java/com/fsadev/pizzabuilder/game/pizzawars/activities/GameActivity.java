@@ -44,13 +44,14 @@ public class GameActivity extends AppCompatActivity
     private ImageView musicView,weaponView,soundView,aboutView,gameTitle,pauseView,stopView;
     private LinearLayout buttonLayout;
     private GameView gameView;
+    private View decorView;
     private ValueAnimator animator;
     private String hintStart;
     private SoundPool soundPool;
     private int explosionId, explosion2Id, buttonId,hissId,upgradeId,replenishId,errorId;
     private SharedPreferences prefs;
     private boolean isSound,isMusic,isPaused;
-    private Bitmap soundEnabled,soundDisabled,musicDisabled,play,pause,musicEnabled;
+    private Bitmap soundEnabled,soundDisabled,musicDisabled,play,pause,stop,musicEnabled;
     private MediaPlayer player;
     private ConstraintLayout controlsLayout;
     private AchievementUtils achievementUtils;
@@ -97,6 +98,7 @@ public class GameActivity extends AppCompatActivity
         // Preferencias
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         // Vistas
+        decorView = getWindow().getDecorView();
         weaponView = findViewById(R.id.game_weaponView);
         weaponName = findViewById(R.id.game_weaponName);
         gameTitle = findViewById(R.id.game_title);
@@ -116,22 +118,10 @@ public class GameActivity extends AppCompatActivity
         btnFire.setOnClickListener(this::Fire);
 
         // Sonidos
-        soundPool = new SoundPool.Builder()
-                .setMaxStreams(2)
-                .setAudioAttributes(new AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .build())
-                .build();
+        buildSoundPool();
 
         // Carga los sonidos
-        explosionId = soundPool.load(this, R.raw.explosion, 1);
-        explosion2Id = soundPool.load(this, R.raw.explosion_two, 1);
-        buttonId = soundPool.load(this, R.raw.button, 1);
-        hissId = soundPool.load(this, R.raw.hiss, 1);
-        replenishId = soundPool.load(this, R.raw.replenish, 1);
-        upgradeId = soundPool.load(this, R.raw.upgrade, 1);
-        errorId = soundPool.load(this, R.raw.error, 1);
-        WeaponData.loadSounds(this, soundPool);
+        loadSounds();
 
         // Texto
         Typeface typeface = FontUtils.getTypeface(this);
@@ -156,6 +146,7 @@ public class GameActivity extends AppCompatActivity
                 colorPrimary,
                 Shader.TileMode.REPEAT
         ));
+
         // Seteo de fuente del texto de ayuda contextual
         hintView.setTypeface(typeface);
         hintView.getPaint().setShader(new LinearGradient(
@@ -165,9 +156,135 @@ public class GameActivity extends AppCompatActivity
                 colorPrimary,
                 Shader.TileMode.REPEAT
         ));
+
         // Texto de ayuda inicial
         hintStart = getString(R.string.hint_start);
 
+        // Crea los bitmaps para los botones dados dos colores
+        initializeButtonBitmaps(colorPrimary, colorAccent);
+
+        // Setea el boton de musica
+        setMusicButton(colorPrimary, colorAccent);
+
+        // Setea el boton de efectos de sonido
+        setSoundButton();
+
+        // Setea el boton de tutorial
+        setTutorialButton(colorPrimary, colorAccent);
+
+        // Setea el boton de pausa
+        setPauseButton();
+
+        // Setea el boton de stop
+        setStopButton();
+
+        //Recibe el puntaje maximo guardado en Shared Preference
+        int highScore = prefs.getInt(PreferenceUtils.PREF_HIGH_SCORE, 0);
+        if (highScore > 0) {
+            // Muestra el puntaje maximo
+            highScoreView.setText(String.format(getString(R.string.score_high), highScore));
+        }
+
+        // Reproductor
+        player = MediaPlayer.create(this, R.raw.music);
+        player.setLooping(true);
+        if (isMusic) {
+            player.start();
+        }
+
+        // Maneja el runnable que hace parpadear los botones
+        handler.postDelayed(hintRunnable, 1000);
+        //Setea el listener de eventos
+        gameView.setListener(this);
+        gameView.setOnClickListener(this);
+        // Inicializa la clase de logros
+        achievementUtils = new AchievementUtils(this);
+        // Maneja la pantalla de inicio
+        animateTitle(true);
+
+    } //--------------------------------------------------------------------------------------------
+
+    // Setea las funciones del boton de efectos de sonido
+    private void setSoundButton() {
+        isSound = prefs.getBoolean(PreferenceUtils.PREF_SOUND, true);
+        soundView.setImageBitmap(isSound ? soundEnabled : soundDisabled);
+        soundView.setOnClickListener(view -> {
+            isSound = !isSound;
+            prefs.edit().putBoolean(PreferenceUtils.PREF_SOUND, isSound).apply();
+            soundView.setImageBitmap(isSound ? soundEnabled : soundDisabled);
+            if (isSound)
+                soundPool.play(buttonId, 1, 1, 0, 0, 1);
+        });
+    }
+
+    // Carga los bitmaps que van a usar los botones
+    private void initializeButtonBitmaps(int colorPrimary, int colorAccent) {
+        // Sonido
+        soundEnabled = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_sound_enabled), colorAccent, colorPrimary);
+        soundDisabled = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_sound_disabled), colorAccent, colorPrimary);
+        //Botones de estado
+        play = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_play), colorAccent, colorPrimary);
+        pause = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_pause), colorAccent, colorPrimary);
+        stop = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_stop), colorAccent, colorPrimary);
+    }
+
+    // Setea la funcion del boton tutorial
+    private void setTutorialButton(int colorPrimary, int colorAccent) {
+        aboutView.setImageBitmap(ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_tutorial), colorAccent, colorPrimary));
+        aboutView.setOnClickListener(view -> {
+            // Inicia el tutorial
+            if (!gameView.isPlaying() && (animator == null || !animator.isStarted())) {
+                gameView.setOnClickListener(null);
+                gameView.play(true); //Inicia una nueva partida de tutorial
+                // Control de visibilidad de la pantalla de inicio
+                animateTitle(false);
+                if (isSound) {
+                    soundPool.play(hissId, 1, 1, 0, 0, 1);
+                }
+            }
+        });
+    }
+
+    // Setea la funcion del boton stop
+    private void setStopButton() {
+        stopView.setImageBitmap(stop);
+        stopView.setOnClickListener(view -> {
+            if (isPaused) {
+                pauseView.setImageBitmap(pause);
+                pauseView.setAlpha(1f);
+                gameView.onResume();
+                isPaused = false;
+            }
+            // Termina el juego
+            onStop(gameView.score);
+            gameView.stop();
+        });
+    }
+
+    // Setea la funcion del boton pausa-play
+    private void setPauseButton() {
+        pauseView.setImageBitmap(pause);
+        // clickListener del boton
+        pauseView.setOnClickListener(view -> {
+            isPaused = !isPaused;
+            //Pausa
+            if (isPaused) {
+                pauseView.setImageBitmap(play);
+                if (!gameView.isTutorial())
+                    stopView.setVisibility(View.VISIBLE);
+                gameView.onPause(); // pausa el juego
+            } else {
+                // Reanuda el juego
+                pauseView.setImageBitmap(pause);
+                pauseView.setAlpha(1f);
+                stopView.setVisibility(View.GONE);
+                gameView.onResume();
+            }
+        });
+    }
+
+    // Setea y maneja las funciones del boton de musica
+    private void setMusicButton(int colorPrimary, int colorAccent) {
         // Boton de silenciar la musica
         isMusic = prefs.getBoolean(PreferenceUtils.PREF_MUSIC, true);
         // Musica activada
@@ -190,103 +307,54 @@ public class GameActivity extends AppCompatActivity
             if (isSound)
                 soundPool.play(buttonId, 1, 1, 0, 0, 1);
         });
-        // Boton de sonidos
-        isSound = prefs.getBoolean(PreferenceUtils.PREF_SOUND, true);
-        // Sonido activado
-        soundEnabled = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_sound_enabled), colorAccent, colorPrimary);
-        // Sonido desactivado
-        soundDisabled = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_sound_disabled), colorAccent, colorPrimary);
-        soundView.setImageBitmap(isSound ? soundEnabled : soundDisabled);
-        // Click listener
-        soundView.setOnClickListener(view -> {
-            isSound = !isSound;
-            prefs.edit().putBoolean(PreferenceUtils.PREF_SOUND, isSound).apply();
-            soundView.setImageBitmap(isSound ? soundEnabled : soundDisabled);
-            if (isSound)
-                soundPool.play(buttonId, 1, 1, 0, 0, 1);
-        });
+    }
 
-        // Boton de tutorial
-        aboutView.setImageBitmap(ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_tutorial), colorAccent, colorPrimary));
-        aboutView.setOnClickListener(view -> {
-            // Inicia el tutorial
-            if (!gameView.isPlaying() && (animator == null || !animator.isStarted())) {
-                gameView.setOnClickListener(null);
-                gameView.play(true); //Inicia una nueva partida de tutorial
-                // Control de visibilidad de la pantalla de inicio
-                animateTitle(false);
-                if (isSound) {
-                    soundPool.play(hissId, 1, 1, 0, 0, 1);
-                }
-            }
-        });
+    // Carga los efectos de sonido al soundPool
+    private void loadSounds() {
+        explosionId = soundPool.load(this, R.raw.explosion, 1);
+        explosion2Id = soundPool.load(this, R.raw.explosion_two, 1);
+        buttonId = soundPool.load(this, R.raw.button, 1);
+        hissId = soundPool.load(this, R.raw.hiss, 1);
+        replenishId = soundPool.load(this, R.raw.replenish, 1);
+        upgradeId = soundPool.load(this, R.raw.upgrade, 1);
+        errorId = soundPool.load(this, R.raw.error, 1);
+        WeaponData.loadSounds(this, soundPool);
+    }
 
-        //Botones de estado
-        play = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_play), colorAccent, colorPrimary);
-        pause = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_pause), colorAccent, colorPrimary);
-        Bitmap stop = ImageUtils.gradientBitmap(ImageUtils.getVectorBitmap(this, R.drawable.ic_game_stop), colorAccent, colorPrimary);
-        // Inicia con el boton como pausa
-        pauseView.setImageBitmap(pause);
-        // clickListener del boton
-        pauseView.setOnClickListener(view -> {
-            isPaused = !isPaused;
-            //Pausa
-            if (isPaused) {
-                pauseView.setImageBitmap(play);
-                if (!gameView.isTutorial())
-                    stopView.setVisibility(View.VISIBLE);
-                gameView.onPause(); // pausa el juego
-            } else {
-                // Reanuda el juego
-                pauseView.setImageBitmap(pause);
-                pauseView.setAlpha(1f);
-                stopView.setVisibility(View.GONE);
-                gameView.onResume();
-            }
-        });
-        // Stop
-        stopView.setImageBitmap(stop);
-        stopView.setOnClickListener(view -> {
-            if (isPaused) {
-                pauseView.setImageBitmap(pause);
-                pauseView.setAlpha(1f);
-                gameView.onResume();
-                isPaused = false;
-            }
-            // Termina el juego
-            onStop(gameView.score);
-            gameView.stop();
-        });
-        //Recibe el puntaje maximo guardado en Shared Preference
-        int highScore = prefs.getInt(PreferenceUtils.PREF_HIGH_SCORE, 0);
-        if (highScore > 0) {
-            // Muestra el puntaje maximo
-            highScoreView.setText(String.format(getString(R.string.score_high), highScore));
+    // Setea el soundPool para cargar los efectos de sonido
+    private void buildSoundPool() {
+        soundPool = new SoundPool.Builder()
+                .setMaxStreams(2)
+                .setAudioAttributes(new AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .build())
+                .build();
+    }
+
+    //Oculta o muestra la barra de navegacion en funcion del parametro pasado
+    private void hideNavigationBar(boolean hide) {
+        //Configura los botones de navegacion
+        if (hide) {
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        }else{
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
-        // Reproductor
-        player = MediaPlayer.create(this, R.raw.music);
-        player.setLooping(true);
-        if (isMusic) {
-            player.start();
-        }
-        // Maneja el runnable que hace parpadear los botones
-        handler.postDelayed(hintRunnable, 1000);
-        //Setea el listener de eventos
-        gameView.setListener(this);
-        gameView.setOnClickListener(this);
-        // Inicializa la clase de logros
-        achievementUtils = new AchievementUtils(this);
-        // Maneja la pantalla de inicio
-        animateTitle(true);
 
     }
-    //----------------------------------------------------------------------------------------------
 
     // Click en el boton de disparar
     private void Fire(View view) {
         gameView.FireProyectils();
     }
-
 
     //Maneja la pantalla de titulo, si el juego comienza la oculta y si termina la muestra
     private void animateTitle(final boolean isVisible) {
@@ -332,7 +400,6 @@ public class GameActivity extends AppCompatActivity
             controlsLayout.setVisibility(View.VISIBLE);
         }
     }
-
 
     @Override
     public void onPause() {
@@ -427,13 +494,17 @@ public class GameActivity extends AppCompatActivity
         //Reseatea el panel del arma
         weaponName.setText(getString(R.string.weapon_pellet));
         weaponView.setImageResource(R.drawable.ic_weapon_pellet);
-
+        //Muestra la barra de navegacion
+        hideNavigationBar(false);
     }
     // Cuando un ingrediente pasa fuera de la pantalla
     @Override
     public void onIngredientPassed() {
-        if (achievementUtils != null)
+        if (achievementUtils != null) {
             achievementUtils.onIngredientPassed();
+        }
+
+
     }
     // Cuando un ingrediente choca con la nave
     @Override
@@ -501,7 +572,8 @@ public class GameActivity extends AppCompatActivity
             if (isSound) {
                 soundPool.play(hissId, 1, 1, 0, 0, 1);
             }
-
+            //Oculta los botones
+            hideNavigationBar(true);
         }
     }
 

@@ -20,6 +20,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
@@ -199,13 +200,14 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                 //Dibuja el fondo-------------------------------------------------------------------
                 background.draw(canvas, speed);
 
-                //Evento: paso un asteroide---------------------------------------------------------
+                //Si paso un ingrediente---------------------------------------------------------
                 if (ingredients.draw(canvas, speed)) {
                     new Handler(Looper.getMainLooper()).post(() -> listener.onIngredientPassed());
                     //Aumenta el contador de ingredientes que pasaron
                     ingredientsPassedCount++;
-                    //Si el listener esta activo y pasaron 20 ingredientes crea una caja de municion
-                    if (listener != null && ingredientsPassedCount % 20 == 0) {
+                    // Verifica si pasaron la cantidad requerida de ingredientes y entrega una caja de municion
+                    int ingredientPassedRequirement = Math.round(20 + (5 * speed - 1));
+                    if (listener != null && ingredientsPassedCount % ingredientPassedRequirement == 0) {
                         CreateAmmoBox();
                     }
                 }
@@ -226,8 +228,8 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                 matrix.postTranslate(-shipBitmap.getWidth() / 2f, -shipBitmap.getHeight() / 2f);
                 matrix.postRotate(shipRotation);
                 matrix.postTranslate(left, top);
-                canvas.drawBitmap(shipBitmap, matrix, paint);
                 //Dibuja la nave en la nueva posicion-----------------------------------------------
+                canvas.drawBitmap(shipBitmap, matrix, paint);
                 Rect position = new Rect(
                         (int) left - (shipBitmap.getWidth() / 2),
                         (int) top - (shipBitmap.getWidth() / 2),
@@ -238,7 +240,6 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                 for (ProjectileData projectile : new ArrayList<>(projectiles)) {
                     //Atributos del proyectil
                     int projectileSpeed = 5; // velocidad del proyectil
-
                     // Posicion actual del proyectil
                     Rect rect = projectile.next(projectileSpeed, canvas.getWidth(), canvas.getHeight());
 
@@ -267,14 +268,14 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                                     listener.onIngredientHit(++score);
                                 }
                                 // Maneja las mejoras de armas
-                                int scoreRequirement = 20; //cantidad de enemigos derrotados para un cambio de arma
-                                if (score % scoreRequirement == 0 && (score / scoreRequirement) < (WeaponData.WEAPONS.length - 1)) {
+                                int weaponUpgradeRequirement = 20; //cantidad de enemigos derrotados para un cambio de arma
+                                if (score % weaponUpgradeRequirement == 0 && (score / weaponUpgradeRequirement) < (WeaponData.WEAPONS.length - 1)) {
                                     // Determina el arma que se debe entregar
-                                    final WeaponData weapon = WeaponData.WEAPONS[score / scoreRequirement];
+                                    final WeaponData weapon = WeaponData.WEAPONS[score / weaponUpgradeRequirement];
                                     // Crea la caja con el arma
                                     CreateWeaponBox(weapon);
                                 }
-                                //Crea una caja de municion si se destruyeron 10 enemigos
+                                //Crea una caja de municion si se destruyeron los enemigos necesarios
                                 if (score % 10 == 0) {
                                     CreateAmmoBox();
                                 }
@@ -349,7 +350,7 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
     //Crea una caja de municion---------------------------------------------------------------------
     private void CreateAmmoBox() {
         boxes.add(new BoxData(boxBitmap, box -> new Handler(Looper.getMainLooper()).post(() -> {
-            ammoAnimator = ValueAnimator.ofFloat(ammo, Math.min(ammo + 20, weapon.capacity));
+            ammoAnimator = ValueAnimator.ofFloat(ammo, Math.min(ammo + 10, weapon.capacity));
             ammoAnimator.setDuration(250);
             ammoAnimator.setInterpolator(new DecelerateInterpolator());
             ammoAnimator.addUpdateListener(valueAnimator -> ammo = (float) valueAnimator.getAnimatedValue());
@@ -500,7 +501,7 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                 }
 
                 // Anima el movimiento lateral de la nave
-                animator.setDuration((long) (1000 / speed));
+                animator.setDuration((long) (1000 / 1.5f));
                 animator.setStartDelay(50);
                 animator.setInterpolator(new AccelerateInterpolator());
                 animator.addUpdateListener(valueAnimator -> {
@@ -539,7 +540,7 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                 //Anima la desaceleracion de la nave
                 animator = ValueAnimator.ofFloat(shipPositionX, newX);
                 animator.setInterpolator(new DecelerateInterpolator());
-                animator.setDuration((long) (500 / speed));
+                animator.setDuration((long) (500 / 1.5f));
                 animator.addUpdateListener(valueAnimator -> {
                     float newX1 = (float) valueAnimator.getAnimatedValue();
                     if (newX1 <= 0)
