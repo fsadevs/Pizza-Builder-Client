@@ -7,11 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fsadev.pizzabuilder.R;
-import com.fsadev.pizzabuilder.models.pizza.FavoriteAdapter;
 
 import java.util.ArrayList;
 
@@ -34,7 +32,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
         holder.itemName.setText(itemList.get(position).getName());
         holder.itemPrice.setText(String.valueOf(itemList.get(position).getPrice()));
         String type = itemList.get(position).getType();
-        if (type.equals("pizza")){
+        if (type.equals("pedido")){
             holder.itemIcon.setImageResource(R.drawable.ic_voucher_discount);
         }else if(type.equals("delivery")){
             holder.itemIcon.setImageResource(R.drawable.ic_voucher_delivery);

@@ -20,7 +20,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 

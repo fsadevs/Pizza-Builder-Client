@@ -11,6 +11,7 @@ public class UserProgress {
     private int Level;
     private int Points;
     private int NextLevelRequirement;
+    private int CurrentLevelRequirement, CurrentProgress;
 
     public UserProgress() {
         //recibe el progreso del usuario
@@ -29,7 +30,12 @@ public class UserProgress {
         try {
             Level = Objects.requireNonNull(doc.getDouble("nivel")).intValue();
             Points = Objects.requireNonNull(doc.getDouble("puntos")).intValue();
-            NextLevelRequirement = (int) Math.pow(Level + 1, 2) * 1000;
+            //Puntos necesarios para estar en el nivel actual, se usara como piso
+            CurrentLevelRequirement = (int) Math.pow(Level, 2) * 1000;
+            //Puntos necesarios para subir al siguiente nivel
+            NextLevelRequirement = ((int) Math.pow(Level + 1, 2) * 1000) - CurrentLevelRequirement;
+            //Progreso del nivel actual, esto es los puntos sobrantes del usuario despues de subir de nivel
+            CurrentProgress = Points - CurrentLevelRequirement;
             //Manda el callback
             listener.onSuccess();
         } catch (Exception e) {
@@ -50,6 +56,8 @@ public class UserProgress {
     public int getNextLevelRequirement() {
         return NextLevelRequirement;
     }
+
+    public int getCurrentProgress(){return CurrentProgress;}
 
     //interface que se reescribe para diferentes usos-----------------------------------------------
     public interface ProgressListener{

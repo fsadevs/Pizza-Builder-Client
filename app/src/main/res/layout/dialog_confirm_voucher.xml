@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="20dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/confirm_voucher_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_gradient"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/confirm_voucher_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="Confirmar canje"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/confirm_voucher_header_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/banner_bg"
+                tools:ignore="ContentDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <View
+            android:id="@+id/divider78"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/naranja_base"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+        <Button
+            android:id="@+id/confirm_voucher_btnCancelar"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/cancelar"
+            android:textColor="@color/gray_600"
+            app:layout_constraintEnd_toStartOf="@+id/confirm_voucher_btnConfirm"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider78"
+            app:rippleColor="@color/color_base2"
+            app:strokeWidth="0dp" />
+
+        <Button
+            android:id="@+id/confirm_voucher_btnConfirm"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/confirmar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/confirm_voucher_divider"
+            app:layout_constraintTop_toBottomOf="@id/divider78"
+            app:rippleColor="@color/color_base2"
+            app:strokeWidth="0dp" />
+
+        <View
+            android:id="@+id/confirm_voucher_divider"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/naranja_base"
+            app:layout_constraintBottom_toBottomOf="@+id/confirm_voucher_btnConfirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/divider78" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="50dp"
+            android:text="Voucher:"
+            android:textColor="@color/naranja_base"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/confirm_voucher_header" />
+
+        <TextView
+            android:id="@+id/confirm_voucher_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="Descuento de $100"
+            android:textColor="@color/drawer_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView16"
+            app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Costo:"
+            android:textColor="@color/naranja_base"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textView16"
+            app:layout_constraintTop_toBottomOf="@+id/confirm_voucher_name" />
+
+        <TextView
+            android:id="@+id/confirm_voucher_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="1500 puntos"
+            android:textColor="@color/drawer_text"
+            app:layout_constraintStart_toStartOf="@+id/confirm_voucher_name"
+            app:layout_constraintTop_toBottomOf="@+id/confirm_voucher_name" />
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Saldo:"
+            android:textColor="@color/naranja_base"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textView18"
+            app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+        <TextView
+            android:id="@+id/confirm_voucher_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="5000 puntos"
+            android:textColor="@color/drawer_text"
+            app:layout_constraintStart_toStartOf="@+id/confirm_voucher_price"
+            app:layout_constraintTop_toBottomOf="@+id/confirm_voucher_price" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/confirm_voucher_resultLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/divider78"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/confirm_voucher_header"
+            app:layout_constraintVertical_bias="0.0"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/confirm_voucher_loading"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/confirm_voucher_indicator"
+                app:layout_constraintEnd_toEndOf="@+id/confirm_voucher_indicator"
+                app:layout_constraintStart_toStartOf="@+id/confirm_voucher_indicator"
+                app:layout_constraintTop_toTopOf="@+id/confirm_voucher_indicator" />
+
+            <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
+                android:id="@+id/confirm_voucher_indicator"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:direction="clockwise"
+                app:dotWidth="10dp"
+                app:drawDot="true"
+                app:gradientEndColor="#FFA726"
+                app:gradientType="sweep"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:progressColor="@color/naranja_base"
+                app:textSize="0sp" />
+
+            <TextView
+                android:id="@+id/confirm_voucher_userLevel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:drawableStart="@drawable/ic_user_level"
+                android:drawablePadding="10dp"
+                android:text="Nivel 5"
+                android:textColor="@color/drawer_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/confirm_voucher_indicator"
+                app:layout_constraintTop_toTopOf="@+id/confirm_voucher_indicator" />
+
+            <TextView
+                android:id="@+id/confirm_voucher_userPoints"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:drawableStart="@drawable/ic_user_points"
+                android:drawablePadding="10dp"
+                android:text="200000 puntos"
+                android:textColor="@color/teal_700"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/confirm_voucher_indicator"
+                app:layout_constraintTop_toBottomOf="@+id/confirm_voucher_userLevel" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

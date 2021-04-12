@@ -90,8 +90,10 @@ public class ProfileFragment extends Fragment {
             txtPoints.setText(strPoints);
             txtLevel.setText(strLevel);
             //Setea el progress indicator
-            circularProgressIndicator.setMaxProgress(userProgress.getNextLevelRequirement());
-            circularProgressIndicator.setCurrentProgress(puntos);
+            int max = userProgress.getNextLevelRequirement();
+            int current = userProgress.getCurrentProgress();
+            circularProgressIndicator.setMaxProgress(max);
+            circularProgressIndicator.setCurrentProgress(current);
             circularProgressIndicator.animate();
         });
     }

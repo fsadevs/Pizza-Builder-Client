@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/ic_message_corner"
-        android:backgroundTint="#FFF59D"
+        android:backgroundTint="#FFCC80"
         android:rotation="90"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="8dp"
-        app:cardBackgroundColor="#FFF59D"
+        app:cardBackgroundColor="#FFCC80"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
         app:contentPadding="16dp"
