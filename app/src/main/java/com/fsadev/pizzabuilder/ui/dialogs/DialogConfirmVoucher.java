@@ -43,7 +43,7 @@ public class DialogConfirmVoucher {
     private TextView userLevel, userPoints;
     private final ImageView loadingImg;
     private final Button btnConfirm;
-    private View divider;
+    private final View divider;
 
     public DialogConfirmVoucher(Voucher voucher, Context context, UserProgress userProgress) {
         this.voucher = voucher;
@@ -76,16 +76,13 @@ public class DialogConfirmVoucher {
         userLevel = dialog.findViewById(R.id.confirm_voucher_userLevel);
         //Nombre
         TextView name = dialog.findViewById(R.id.confirm_voucher_name);
-        String strName = voucher.getName() + " en tu " + voucher.getType();
-        name.setText(strName);
+        name.setText(String.format("%s en tu %s", voucher.getName(), voucher.getType()));
         //Precio
         TextView price = dialog.findViewById(R.id.confirm_voucher_price);
-        String strPrice = voucher.getPrice() + " puntos";
-        price.setText(strPrice);
+        price.setText(String.format("%s puntos", voucher.getPrice()));
         //Saldo
         TextView balance = dialog.findViewById(R.id.confirm_voucher_balance);
-        String strBalance = (userProgress.getPoints() - voucher.getPrice()) + " puntos";
-        balance.setText(strBalance);
+        balance.setText(String.format("%s puntos", userProgress.getPoints()));
 
     }
 
@@ -93,24 +90,35 @@ public class DialogConfirmVoucher {
     private void Purchase(String voucherID) {
         //Deshabilita el boton
         btnConfirm.setEnabled(false);
+
         //Mueve el divider hacia la izquierda para "ocultar" el boton de cancelar
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) divider.getLayoutParams();
         params.horizontalBias = 0f;
         divider.setLayoutParams(params);
+
         // Muestra la capa de progreso
         progressIndicatorLayout.setVisibility(View.VISIBLE);
+
+        // Setea los textviews de nivel y puntos
+        userLevel.setText(String.format("Nivel %s", userProgress.getLevel()));
+        userPoints.setText(String.format("%s puntos", userProgress.getPoints()));
+
         // Anima la entrada del progressIndicator
         circularProgressIndicator.startAnimation(AnimationUtils.loadAnimation(context,R.anim.zoomin));
+
         // Setea los valores
         circularProgressIndicator.setProgress(userProgress.getCurrentProgress(),userProgress.getNextLevelRequirement());
+
         //Loading image
         Glide.with(context).load(R.drawable.anim_loading1).into(loadingImg);
 
         // Genera la URL para la peticion
         String req = "https://us-central1-pizzabuilderapp.cloudfunctions.net/addvoucher?id="
                 + UserInfo.getUserID() + "&vid=" + voucherID;
+
         // Inicializa la peticion
         RequestQueue queue = Volley.newRequestQueue(context);
+
         // Crea la string de la peticion
         StringRequest stringRequest = new StringRequest(Request.Method.GET, req, response -> {
             if (response.equals("OK")){
@@ -153,7 +161,7 @@ public class DialogConfirmVoucher {
                    afterProgress.getNextLevelRequirement());
 
            //Anima los puntos del usuario disminuyendo
-           ValueAnimator valueAnimator = ValueAnimator.ofInt(afterProgress.getPoints(), userProgress.getPoints());
+           ValueAnimator valueAnimator = ValueAnimator.ofInt(userProgress.getPoints(),afterProgress.getPoints());
            valueAnimator.setDuration(1500);
            valueAnimator.addUpdateListener(value -> userPoints.setText(String.format("%s puntos", value.getAnimatedValue().toString())));
            valueAnimator.start();

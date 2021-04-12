@@ -31,4 +31,14 @@
         app:layout_constraintBottom_toTopOf="@+id/favorites_recyclerView"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <include
+        android:id="@+id/favorites_emptyLayout"
+        layout="@layout/screen_empty_favorites"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

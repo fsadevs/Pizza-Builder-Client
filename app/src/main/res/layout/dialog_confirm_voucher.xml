@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="1500 puntos"
-            android:textColor="@color/drawer_text"
+            android:textColor="@color/teal_700"
             app:layout_constraintStart_toStartOf="@+id/confirm_voucher_name"
             app:layout_constraintTop_toBottomOf="@+id/confirm_voucher_name" />
 
@@ -148,7 +148,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Saldo:"
+            android:text="Balance:"
             android:textColor="@color/naranja_base"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textView18"
@@ -160,7 +160,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="5000 puntos"
-            android:textColor="@color/drawer_text"
+            android:textColor="@color/teal_700"
             app:layout_constraintStart_toStartOf="@+id/confirm_voucher_price"
             app:layout_constraintTop_toBottomOf="@+id/confirm_voucher_price" />
 
@@ -175,8 +175,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirm_voucher_header"
-            app:layout_constraintVertical_bias="0.0"
-            tools:visibility="visible">
+            app:layout_constraintVertical_bias="0.0">
 
             <ImageView
                 android:id="@+id/confirm_voucher_loading"
@@ -199,7 +198,7 @@
                 app:dotWidth="10dp"
                 app:drawDot="true"
                 app:gradientEndColor="#FFA726"
-                app:gradientType="sweep"
+                app:gradientType="linear"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.2"
@@ -219,6 +218,7 @@
                 android:drawablePadding="10dp"
                 android:text="Nivel 5"
                 android:textColor="@color/drawer_text"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/confirm_voucher_indicator"
                 app:layout_constraintTop_toTopOf="@+id/confirm_voucher_indicator" />
@@ -234,6 +234,7 @@
                 android:drawablePadding="10dp"
                 android:text="200000 puntos"
                 android:textColor="@color/teal_700"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/confirm_voucher_indicator"
                 app:layout_constraintTop_toBottomOf="@+id/confirm_voucher_userLevel" />

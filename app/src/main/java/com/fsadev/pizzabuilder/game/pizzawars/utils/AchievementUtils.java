@@ -55,7 +55,6 @@ public class AchievementUtils implements GameView.GameListener {
 //                unlock(R.string.achievement_coward);
             }
             ingredientsPassed++;
-            Toast.makeText(context, "P: " + ingredientsPassed, Toast.LENGTH_SHORT).show();
             if (ingredientsPassed ==100){
                 //Logro: Cinturas
                 CreateNotification("Cinturas");
