@@ -143,12 +143,12 @@ public class LoginActivity extends AppCompatActivity {
                  token = task.getResult();
              }
             Map<String, Object> user = new HashMap<>();
-            user.put("name",  currentUser.getDisplayName());
+            user.put("nombre",  currentUser.getDisplayName());
             user.put("email", currentUser.getEmail());
             user.put("tel", null);
             user.put("imgURL", Objects.requireNonNull(currentUser.getPhotoUrl()).toString());
             user.put("token",token);
-            user.put("address","undefined");
+            user.put("direccion","undefined");
             user.put("loc",new GeoPoint(0,0));
             user.put("area","undefined");
             //sube el contenido

@@ -120,18 +120,18 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             //textviews
-            txtSauce = itemView.findViewById(R.id.favorite_txtSalsa);
-            txtCheese = itemView.findViewById(R.id.favorite_txtQueso);
-            txtTopping = itemView.findViewById(R.id.favorite_txtToppings);
-            txtName = itemView.findViewById(R.id.favorite_txtName);
+            txtSauce = itemView.findViewById(R.id.favoriteItem_sauce);
+            txtCheese = itemView.findViewById(R.id.favoriteItem_cheese);
+            txtTopping = itemView.findViewById(R.id.favoriteItem_toppings);
+            txtName = itemView.findViewById(R.id.favoriteItem_name);
             //icono
-            icon = itemView.findViewById(R.id.favorite_img);
+            icon = itemView.findViewById(R.id.favoriteItem_img);
             //layouts
             ingredientsLayout = itemView.findViewById(R.id.favorite_ingredients_layout);
             ConstraintLayout headerLayout = itemView.findViewById(R.id.favorite_headerLayout);
             headerLayout.setOnClickListener(this::onCardClick);
             //boton añadir al carrito
-            itemView.findViewById(R.id.favorite_btnAddToCart).setOnClickListener(this::AddToCart);
+            itemView.findViewById(R.id.favoriteItem_btnAddToCart).setOnClickListener(this::AddToCart);
         }
 
         //Manda el callback para añadir al carrito

@@ -41,7 +41,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         mListener = listener;
     }
 
-
     //----------------------------------------------------------------------------------------------
     @NonNull
     @Override
@@ -92,16 +91,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         //Crea la vista
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtNombre = itemView.findViewById(R.id.cart_txtNombrePizza);
-            txtPrecio = itemView.findViewById(R.id.cart_txtPrecioPizza);
-            txtSalsa = itemView.findViewById(R.id.cart_txtSalsa);
-            txtQueso = itemView.findViewById(R.id.cart_txtQueso);
-            txtToppings = itemView.findViewById(R.id.cart_txtToppings);
+            txtNombre = itemView.findViewById(R.id.cartItem_name);
+            txtPrecio = itemView.findViewById(R.id.cartItem_price);
+            txtSalsa = itemView.findViewById(R.id.cartItem_sauce);
+            txtQueso = itemView.findViewById(R.id.cartItem_cheese);
+            txtToppings = itemView.findViewById(R.id.cartItem_toppings);
             ingredientsLayout = itemView.findViewById(R.id.cart_ingredients_layout);
-            icon = itemView.findViewById(R.id.cart_img);
+            icon = itemView.findViewById(R.id.cartItem_img);
             headerLayout = itemView.findViewById(R.id.cart_headerLayout);
             headerLayout.setOnClickListener(this::cardOnClick);
-            btnDelete = itemView.findViewById(R.id.cart_btnDelete);
+            btnDelete = itemView.findViewById(R.id.cartItem_btnDelete);
             btnDelete.setOnClickListener(this::DeleteItem);
         }
 

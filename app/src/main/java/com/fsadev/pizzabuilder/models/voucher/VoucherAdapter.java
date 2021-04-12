@@ -30,8 +30,8 @@ public class VoucherAdapter extends RecyclerView .Adapter<VoucherAdapter.ViewHol
     @Override
     public void onBindViewHolder(@NonNull VoucherAdapter.ViewHolder holder, int position) {
         holder.voucherID.setText(listVoucher.get(position).getVoucherID());
-        holder.description.setText(listVoucher.get(position).getDescription());
-        String amount = String.valueOf(listVoucher.get(position).getAmount());
+        holder.description.setText(listVoucher.get(position).getName());
+        String amount = String.valueOf(listVoucher.get(position).getDiscount());
         holder.amount.setText(amount);
     }
 

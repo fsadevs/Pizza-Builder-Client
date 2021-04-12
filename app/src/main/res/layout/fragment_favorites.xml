@@ -26,7 +26,7 @@
         android:closeIcon="@drawable/ic_cross_small"
         android:orientation="horizontal"
         android:queryHint="Búsqueda por nombre"
-        android:searchIcon="@drawable/ic_search"
+        android:searchIcon="@drawable/ic_favorite_search"
         android:showDividers="none"
         app:layout_constraintBottom_toTopOf="@+id/favorites_recyclerView"
         app:layout_constraintEnd_toEndOf="parent" />

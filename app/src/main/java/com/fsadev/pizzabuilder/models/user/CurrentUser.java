@@ -45,7 +45,7 @@ public class CurrentUser {
     //Actualizar datos
     public void UpdateInfo(String nombre, String email, String phoneNumber){
         Map<String, Object> data = new HashMap<>();
-        data.put("name",nombre);
+        data.put("nombre",nombre);
         data.put("email",email);
         data.put("tel", phoneNumber);
         FirestoreREF.update(data).addOnCompleteListener(task -> {

@@ -10,9 +10,6 @@ public class ProfileAdapter extends FragmentStateAdapter {
     //Clase que controla los fragments del viewpager del perfil
     //Se vincula con el view pager y retorna los fragments
 
-
-
-
     public ProfileAdapter(@NonNull Fragment fragment) {
         super(fragment);
     }

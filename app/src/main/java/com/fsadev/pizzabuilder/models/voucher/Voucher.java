@@ -5,31 +5,44 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.Objects;
 
 public class Voucher {
-    private final String voucherID;
-    private final String description;
-    private final int amount;
+    private final String VoucherID;
+    private final String Name;
+    private final int Discount;
+    private final int Price;
+    private final String Type;
 
-    public Voucher(String voucherID, String descripcion, int importe) {
-        this.voucherID = voucherID;
-        this.description = descripcion;
-        this.amount = importe;
+    public Voucher(String voucherID, String type, String name, int discount, int price) {
+        VoucherID = voucherID;
+        Name = name;
+        Discount = discount;
+        Price = price;
+        Type = type;
     }
     public Voucher(DocumentSnapshot doc){
-        voucherID = doc.getId();
-        description = doc.getString("descripcion");
-        Double mAmount = doc.getDouble("importe");
-        amount = Objects.requireNonNull(mAmount).intValue();
+        VoucherID = doc.getId();
+        Name = doc.getString("nombre");
+        Discount = Objects.requireNonNull(doc.getDouble("descuento")).intValue();
+        Price = Objects.requireNonNull(doc.getDouble("precio")).intValue();
+        Type = doc.getString("tipo");
     }
 
     public String getVoucherID() {
-        return voucherID;
+        return VoucherID;
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return Name;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getDiscount() {
+        return Discount;
+    }
+
+    public int getPrice() {
+        return Price;
+    }
+
+    public String getType() {
+        return Type;
     }
 }

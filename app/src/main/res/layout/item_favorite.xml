@@ -27,7 +27,7 @@
         android:layout_height="60dp">
 
         <ImageView
-            android:id="@+id/favorite_img"
+            android:id="@+id/favoriteItem_img"
             android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -40,7 +40,7 @@
             app:srcCompat="@drawable/logo_small" />
 
         <TextView
-            android:id="@+id/favorite_txtName"
+            android:id="@+id/favoriteItem_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -49,11 +49,11 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/favorite_img"
+            app:layout_constraintStart_toEndOf="@+id/favoriteItem_img"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/favorite_btnAddToCart"
+            android:id="@+id/favoriteItem_btnAddToCart"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginEnd="16dp"
@@ -87,7 +87,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/favorite_txtSalsa"
+            android:id="@+id/favoriteItem_sauce"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -103,7 +103,7 @@
             app:layout_constraintTop_toBottomOf="@id/divider60" />
 
         <TextView
-            android:id="@+id/favorite_txtQueso"
+            android:id="@+id/favoriteItem_cheese"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -116,10 +116,10 @@
             app:drawableStartCompat="@drawable/ic_cheese"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/favorite_txtSalsa" />
+            app:layout_constraintTop_toBottomOf="@+id/favoriteItem_sauce" />
 
         <TextView
-            android:id="@+id/favorite_txtToppings"
+            android:id="@+id/favoriteItem_toppings"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -132,10 +132,10 @@
             app:drawableStartCompat="@drawable/ic_toppings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/favorite_txtQueso" />
+            app:layout_constraintTop_toBottomOf="@+id/favoriteItem_cheese" />
 
         <Button
-            android:id="@+id/favorite_btnDelete"
+            android:id="@+id/favoriteItem_btnDelete"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="8dp"
@@ -149,7 +149,7 @@
             app:iconPadding="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/favorite_txtToppings"
+            app:layout_constraintTop_toBottomOf="@+id/favoriteItem_toppings"
             app:rippleColor="@color/color_base2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

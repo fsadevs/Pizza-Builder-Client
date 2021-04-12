@@ -17,12 +17,12 @@ public class UserInfo {
     //Constructor con objeto DocumentSnapshot
     public static void setUserObject(DocumentSnapshot snapshot) {
         userID = snapshot.getId();
-        Name = snapshot.getString("name");
+        Name = snapshot.getString("nombre");
         Email = snapshot.getString("email");
         PhoneNumber = snapshot.getString("tel");
         ProfilePicURL = snapshot.getString("imgURL");
         Area = snapshot.getString("area");
-        Address = snapshot.getString("address");
+        Address = snapshot.getString("direccion");
         Loc = snapshot.getGeoPoint("loc");
     }
 

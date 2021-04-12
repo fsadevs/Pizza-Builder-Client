@@ -163,7 +163,7 @@ public class FavoritesFragment extends Fragment {
                 price += priceList.get(cheese);
             } catch (Exception ignored) {
             }
-
+            //TODO: verificar si todos los ingredientes estan disponibles antes de mandar al checkout
             //Arma el objeto pizza y lo añade a la lista--------------------------------------------
             ListPizza.addPizza(new CartPizza(name, sauce, cheese, toppings, price));
             Toast.makeText(getContext(), "Añadido al carrito", Toast.LENGTH_SHORT).show();

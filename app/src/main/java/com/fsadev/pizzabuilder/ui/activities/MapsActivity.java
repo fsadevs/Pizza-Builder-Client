@@ -109,7 +109,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         GeoPoint location = new GeoPoint(selectedLatLng.latitude,selectedLatLng.longitude);
         Map<String, Object> data = new HashMap<>();
         data.put("loc", location);
-        data.put("address",address);
+        data.put("direccion",address);
         data.put("area",deliveryArea);
         //Sube los datos
         ProgressDialog progressDialog = new ProgressDialog(this,R.style.DialogStyle);

@@ -27,7 +27,7 @@
         android:layout_height="60dp">
 
         <ImageView
-            android:id="@+id/cart_img"
+            android:id="@+id/cartItem_img"
             android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -42,7 +42,7 @@
             app:srcCompat="@drawable/logo_small" />
 
         <TextView
-            android:id="@+id/cart_txtNombrePizza"
+            android:id="@+id/cartItem_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -53,11 +53,11 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cart_img"
+            app:layout_constraintStart_toEndOf="@+id/cartItem_img"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/cart_txtPrecioPizza"
+            android:id="@+id/cartItem_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -91,7 +91,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/cart_txtSalsa"
+            android:id="@+id/cartItem_sauce"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -106,7 +106,7 @@
             app:layout_constraintTop_toBottomOf="@+id/divider6" />
 
         <TextView
-            android:id="@+id/cart_txtToppings"
+            android:id="@+id/cartItem_toppings"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -118,10 +118,10 @@
             app:drawableStartCompat="@drawable/ic_toppings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cart_txtQueso" />
+            app:layout_constraintTop_toBottomOf="@+id/cartItem_cheese" />
 
         <TextView
-            android:id="@+id/cart_txtQueso"
+            android:id="@+id/cartItem_cheese"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -133,10 +133,10 @@
             app:drawableStartCompat="@drawable/ic_cheese"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cart_txtSalsa" />
+            app:layout_constraintTop_toBottomOf="@+id/cartItem_sauce" />
 
         <Button
-            android:id="@+id/cart_btnDelete"
+            android:id="@+id/cartItem_btnDelete"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="8dp"
@@ -150,7 +150,7 @@
             app:iconPadding="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cart_txtToppings"
+            app:layout_constraintTop_toBottomOf="@+id/cartItem_toppings"
             app:rippleColor="@color/color_base2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
