@@ -72,6 +72,13 @@
             app:exitAnim="@anim/left_out"
             app:popEnterAnim="@anim/right_in"
             app:popExitAnim="@anim/right_out" />
+        <action
+            android:id="@+id/action_nav_favorites_to_nav_builder"
+            app:destination="@id/nav_builder"
+            app:enterAnim="@anim/left_in"
+            app:exitAnim="@anim/left_out"
+            app:popEnterAnim="@anim/right_in"
+            app:popExitAnim="@anim/right_out" />
     </fragment>
     <action
         android:id="@+id/action_global_nav_cart"

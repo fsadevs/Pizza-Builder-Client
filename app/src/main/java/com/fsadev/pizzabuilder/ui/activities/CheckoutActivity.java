@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +20,9 @@ import com.fsadev.pizzabuilder.models.order.CreateJSON;
 import com.fsadev.pizzabuilder.models.order.PBOrder;
 import com.fsadev.pizzabuilder.models.pizza.ListPizza;
 import com.fsadev.pizzabuilder.models.user.UserInfo;
-import com.google.android.material.card.MaterialCardView;
+
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.mercadopago.android.px.core.MercadoPagoCheckout;
 import com.mercadopago.android.px.internal.util.JsonUtil;
 import com.mercadopago.android.px.model.Payment;
@@ -27,6 +31,7 @@ import com.mercadopago.android.px.model.exceptions.MercadoPagoError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +46,8 @@ public class CheckoutActivity extends AppCompatActivity {
     private static final String PUBLIC_KEY = "APP_USR-2a1a9929-3780-4215-b5a1-34326615bb7c";
 
     private boolean isMercadoPago = false;
+    private Spinner deliverySpinner;
+    private Map<String,String> userVouchers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +58,34 @@ public class CheckoutActivity extends AppCompatActivity {
         //Opciones de pago
         RadioGroup radioGroup = findViewById(R.id.checkout_RGroupOptPago);
         radioGroup.setOnCheckedChangeListener(this::setPaymentMethod);
-        //card
-        MaterialCardView card = findViewById(R.id.checkout_cardLocation);
-        card.setOnCheckedChangeListener(this::CheckCardStatus);
+        //Delivery spinner
+        deliverySpinner = findViewById(R.id.checkout_deliverySpinner);
+        getSpinnerResources();
 
     }
 
-    private void CheckCardStatus(MaterialCardView card, boolean b) {
-        card.setChecked(true);
+    //
+    private void getSpinnerResources() {
+        ArrayList<String> voucherList= new ArrayList<>();
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>
+                (this, android.R.layout.simple_spinner_item,
+                        voucherList); //selected item will look like a spinner set from XML
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout
+                .simple_spinner_dropdown_item);
+        deliverySpinner.setAdapter(spinnerArrayAdapter);
+        FirebaseFirestore.getInstance().collection("Vouchers")
+                .whereEqualTo("propietario",UserInfo.getUserID()).get().addOnCompleteListener(task->{
+                    if (task.isSuccessful()){
+                        userVouchers = new HashMap<>();
+                        for (DocumentSnapshot doc : task.getResult()){
+                            userVouchers.put(doc.getString("name"),doc.getId());
+                            voucherList.add(doc.getString("name"));
+                        }
+
+                    }
+        });
     }
+
 
     //Cambia la variable de medio de pago
     private void setPaymentMethod(RadioGroup radioGroup, int i) {

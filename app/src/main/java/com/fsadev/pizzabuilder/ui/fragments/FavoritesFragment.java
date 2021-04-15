@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,7 +35,7 @@ public class FavoritesFragment extends Fragment {
     private Map<String, Double> priceList;
     private Double basePrice;
     private SearchView tbxSearch;
-
+    private ConstraintLayout emptyFavLayout;
 
     public FavoritesFragment() {
         // Required empty public constructor
@@ -47,6 +48,11 @@ public class FavoritesFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_favorites, container, false);
         //------------------------------------------------------------------------------------------
+        // Layout sin favoritos
+        emptyFavLayout = root.findViewById(R.id.favorites_emptyLayout);
+        //Boton del layout sin favoritos
+        root.findViewById(R.id.emptyFav_goToBuilder).setOnClickListener(v->
+                Navigation.findNavController(v).navigate(R.id.action_nav_favorites_to_nav_builder));
         //busqueda
         tbxSearch = root.findViewById(R.id.favorites_search);
         //inicializa el adaptador
@@ -119,6 +125,7 @@ public class FavoritesFragment extends Fragment {
 
     //Maneja el error al obtener los favoritos
     private void errorFetchingFavorites() {
+        Toast.makeText(getContext(), "Ha ocurrido un error obteniendo tus favoritos", Toast.LENGTH_SHORT).show();
     }
 
     //Carga los documentos
@@ -126,11 +133,19 @@ public class FavoritesFragment extends Fragment {
         for (DocumentSnapshot doc : result) {
             favoritesList.add(new Pizza(doc));
         }
-        //Carga la lista al recycler
-        adapter = new FavoriteAdapter(favoritesList);
-        recyclerView.setAdapter(adapter);
-        adapter.setOnItemClick(this::addToCart);
-        onSearchPerformed();
+        if (favoritesList.size()>0){
+            //Oculta el layout de vacios
+            emptyFavLayout.setVisibility(View.GONE);
+            //Carga la lista al recycler
+            adapter = new FavoriteAdapter(favoritesList);
+            recyclerView.setAdapter(adapter);
+            adapter.setOnItemClick(this::addToCart);
+            onSearchPerformed();
+        }else{
+            //Muestra el layout de vacios
+            emptyFavLayout.setVisibility(View.VISIBLE);
+        }
+
     }
 
     //Añade la pizza al carrito

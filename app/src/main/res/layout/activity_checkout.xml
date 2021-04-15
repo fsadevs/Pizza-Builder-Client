@@ -114,6 +114,7 @@
                         <RadioButton
                             android:id="@+id/optEfectivo"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:background="@drawable/check_background"
                             android:buttonTint="@color/naranja_base"
@@ -146,10 +147,11 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/checkout_cardLocation"
                 android:layout_width="match_parent"
-                android:layout_height="190dp"
+                android:layout_height="220dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="60dp"
                 android:checkable="true"
                 android:clickable="false"
                 app:cardCornerRadius="10dp"
@@ -179,7 +181,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
-                        android:text="Ubicación"
+                        android:text="Datos del envío"
                         android:textColor="@color/drawer_icon"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -207,15 +209,14 @@
 
                     <ImageView
                         android:id="@+id/imageView45"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
                         android:scaleType="fitXY"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider11"
-                        app:layout_constraintVertical_bias="0.508"
-                        app:srcCompat="@drawable/ic_map" />
+                        app:srcCompat="@drawable/ic_location" />
 
                     <ImageButton
                         android:id="@+id/checkout_openMap"
@@ -225,17 +226,17 @@
                         android:background="@drawable/default_circle_button"
                         android:elevation="5dp"
                         android:src="@drawable/ic_pen"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView17"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/divider11" />
+                        app:layout_constraintTop_toTopOf="@+id/checkout_txtAddress" />
 
                     <TextView
                         android:id="@+id/checkout_txtAddress"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="8dp"
                         android:layout_marginEnd="16dp"
-                        android:text="Ubicacion"
+                        android:text="Dirección"
                         android:textColor="@color/drawer_icon"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView45"
@@ -245,14 +246,48 @@
                         app:layout_constraintVertical_bias="0.437" />
 
                     <TextView
-                        android:id="@+id/textView89"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textView17"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Dirección"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toTopOf="@+id/checkout_txtAddress"
-                        app:layout_constraintStart_toStartOf="@+id/checkout_txtAddress"
-                        app:layout_constraintTop_toTopOf="@+id/imageView4" />
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="$ 150"
+                        android:textColor="@color/teal_700"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+                        app:layout_constraintEnd_toStartOf="@+id/checkout_openMap"
+                        app:layout_constraintStart_toEndOf="@+id/imageView12"
+                        app:layout_constraintTop_toTopOf="@+id/imageView12" />
+
+                    <ImageView
+                        android:id="@+id/imageView12"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView45"
+                        app:srcCompat="@drawable/ic_voucher_delivery" />
+
+                    <Spinner
+                        android:id="@+id/checkout_deliverySpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/textView17"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView12" />
+
+                    <ImageView
+                        android:id="@+id/imageView13"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView12"
+                        app:srcCompat="@drawable/ic_voucher_discount" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
